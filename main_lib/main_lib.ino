@@ -20,6 +20,7 @@ void set_time(){
 }
 
 void water(){
+  // average output water in balence line is 69.6 ml/s
   digitalWrite(relay_pin, 1);
   delay(20000);
   digitalWrite(relay_pin, 0);
