@@ -20,13 +20,19 @@ void set_time(){
 }
 
 void water(){
+<<<<<<< HEAD
   
+=======
+  digitalWrite(relay_pin, 1);
+  delay(20000);
+  digitalWrite(relay_pin, 0);
+>>>>>>> a570d95f2e499fd37355f056fe5a93f43096db6f
 }
 
 void setup() {
   Serial.begin(9600);
   //set_time();  //第一次傳就好
-  
+  pinMode(relay_pin,OUTPUT);
 }
 
 void loop() {
