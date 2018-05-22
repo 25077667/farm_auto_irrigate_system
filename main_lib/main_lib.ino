@@ -14,6 +14,8 @@ void set_time(){
   rtc.setDate(5, 8, 2016);   // 設定日期 日，月，年
 }
 
+int a;
+
 void setup() {
   Serial.begin(9600);
   //set_time();  //第一次傳就好
