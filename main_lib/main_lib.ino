@@ -14,6 +14,8 @@ String hh = "";
 String mm = "";
 String ss = "";
 
+String message="";
+
 #define relay_pin 2
 
 DS1302 rtc(10, 9, 8);
@@ -50,14 +52,25 @@ void auto_pull(int mode){
     digitalWrite(relay_pin, 0);
   return true;
 }
+void check_bt_input(){
+  while(Serial.available()){
+    message = char(Serial.read());
+    if ( message == '1'){
+      auto_pull(1);
+      break;
+    }
+    if ( message == '0'){
+      auto_pull(0);
+      break;
+    }
+  }
+}
 
 void setup() {
   BT.begin(9600);
   Serial.begin(9600);
-  set_time();  //第一次傳就好
+  //set_time();  //第一次傳就好
   pinMode(relay_pin,OUTPUT);
-  
-
 }
 
 void loop() {
@@ -71,6 +84,7 @@ void loop() {
   int hhh = hh.toInt();
   if (hhh == 6 || hhh == 19)
     water();
-
-
+    
+  check_bt_input();
+  delay(10000);
 }
