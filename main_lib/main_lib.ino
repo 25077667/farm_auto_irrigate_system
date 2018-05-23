@@ -1,8 +1,13 @@
+#include <SoftwareSerial.h>
 #include <DS1302.h>
+
 
 #define RTC_RST 10
 #define RTC_DAT 9
 #define RTC_CLOCK 8
+#define BT_RX 7
+#define BT_TX 6
+
 
 String sth = ""; //接受時間回傳值
 String hh = "";
@@ -12,6 +17,7 @@ String ss = "";
 #define relay_pin 2
 
 DS1302 rtc(10, 9, 8);
+SoftwareSerial BT(7, 6);
 
 void set_time(){
   rtc.halt(false);
@@ -40,6 +46,7 @@ void auto_pull(int mode){
 }
 
 void setup() {
+  BT.begin(9600);
   Serial.begin(9600);
   set_time();  //第一次傳就好
   pinMode(relay_pin,OUTPUT);
