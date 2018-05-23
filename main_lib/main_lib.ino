@@ -7,6 +7,7 @@
 #define BT_RX 7
 #define BT_TX 6
 #define relay_pin 2
+// relay_pin是給繼電器用的
 
 DS1302 rtc(10, 9, 8);
 SoftwareSerial BT(7, 6);
