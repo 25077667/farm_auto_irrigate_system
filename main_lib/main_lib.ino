@@ -26,7 +26,13 @@ void set_time(){
   rtc.setTime(11, 47, 0);     // 設定時間 時，分，秒 (24hr format)
   rtc.setDate(5, 23, 2016);   // 設定日期 日，月，年
 }
-
+void show_time(){
+  for(int i=0; i<10;i++){
+    Serial.println(rtc.getTimeStr());
+    delay(1000);
+  }
+  
+}
 void water(){
   // average output water in balence line is 69.6 ml/s
   //evaluate 8 plants in our project
@@ -57,8 +63,7 @@ void setup() {
 void loop() {
   //Serial.println("hello");
   //delay(600000);
-  Serial.println(rtc.getTimeStr());
-  delay(1000);
+  //show_time();
   sth = rtc.getTimeStr();
   hh = sth.substring(0,2);
   //mm = sth.substring(3,5);
