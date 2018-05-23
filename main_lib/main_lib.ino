@@ -58,8 +58,8 @@ void check_bt_input(){
   // 手機用藍芽控制是否直接出水，手機記得自己關水
   // 這邊可能有問題，我猜他會有讀不到藍芽或者是無窮迴圈
   // 來這邊DEBUG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  while(Serial.available()){
-    message = char(Serial.read());
+  if(BT.available()){
+    message = char(BT.read());
     if ( message == '1'){
       auto_pull(1);
       break;
@@ -72,8 +72,8 @@ void check_bt_input(){
 }
 
 void setup() {
-  BT.begin(9600);
   Serial.begin(9600);
+  BT.begin(9600);
   //set_time();  //第一次傳就好
   pinMode(relay_pin,OUTPUT);
 }
