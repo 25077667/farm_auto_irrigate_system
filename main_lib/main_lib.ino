@@ -25,13 +25,23 @@ void water(){
   digitalWrite(relay_pin, 1);
   delay(20000);   //therefore we pull over 1392ml/time
   digitalWrite(relay_pin, 0);
+}
 
+void auto_pull(int mode){
+  // this is debug mode
+  // continue pull out water untill you stop
+  if ( mode == 1 )
+    digitalWrite(relay_pin, 1);
+  else
+    digitalWrite(relay_pin, 0);
+  return true;
 }
 
 void setup() {
   Serial.begin(9600);
   //set_time();  //第一次傳就好
   pinMode(relay_pin,OUTPUT);
+
 }
 
 void loop() {
@@ -44,4 +54,6 @@ void loop() {
   int hhh = hh.toInt();
   if (hhh == 6 || hhh == 19)
     water();
+
+
 }
