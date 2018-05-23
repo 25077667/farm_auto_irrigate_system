@@ -16,6 +16,8 @@ String ss = "";
 
 String message="";
 
+bool water_flag = true;
+
 #define relay_pin 2
 
 DS1302 rtc(10, 9, 8);
@@ -32,15 +34,18 @@ void show_time(){
   for(int i=0; i<10;i++){
     Serial.println(rtc.getTimeStr());
     delay(1000);
-  }
-  
+  }  
 }
+
 void water(){
   // average output water in balence line is 69.6 ml/s
   //evaluate 8 plants in our project
-  digitalWrite(relay_pin, 1);
-  delay(20000);   //therefore we pull over 1392ml/time
-  digitalWrite(relay_pin, 0);
+  if ( water_flag == true ){
+    water_flag = false;
+    digitalWrite(relay_pin, 1);
+    delay(20000);   //therefore we pull over 1392ml/time
+    digitalWrite(relay_pin, 0);
+  }
 }
 
 void auto_pull(int mode){
@@ -50,9 +55,10 @@ void auto_pull(int mode){
     digitalWrite(relay_pin, 1);
   else
     digitalWrite(relay_pin, 0);
-  return true;
 }
+
 void check_bt_input(){
+  // 手機用藍芽控制是否直接出水，手機記得自己關水
   while(Serial.available()){
     message = char(Serial.read());
     if ( message == '1'){
@@ -82,9 +88,14 @@ void loop() {
   //mm = sth.substring(3,5);
   //ss = sth.substring(6,8);
   int hhh = hh.toInt();
-  if (hhh == 6 || hhh == 19)
-    water();
+  if ( hhh == 6 || hhh == 19)
+    water(); //註解1號
+  if ( hhh == 7 || hhh == 20)
+    water_flag = true; //註解二號
     
+  // 早上6點會去澆水(呼叫water()函式)，然後water會把water_flag關掉，早上7點再把water_flag打開，直到19點符合註解1號
+  // 因為只要是早上6點，就不會是早上7點，所以關了之後7點再開就不會撞到6點
+  
   check_bt_input();
   delay(10000);
 }
