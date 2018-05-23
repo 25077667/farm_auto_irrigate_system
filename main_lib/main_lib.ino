@@ -56,6 +56,8 @@ void auto_pull(int mode){
 
 void check_bt_input(){
   // 手機用藍芽控制是否直接出水，手機記得自己關水
+  // 這邊可能有問題，我猜他會有讀不到藍芽或者是無窮迴圈
+  // 來這邊DEBUG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   while(Serial.available()){
     message = char(Serial.read());
     if ( message == '1'){
@@ -81,9 +83,7 @@ void loop() {
   //delay(600000);
   //show_time();
   sth = rtc.getTimeStr();
-  hh = sth.substring(0,2);
-  //mm = sth.substring(3,5);
-  //ss = sth.substring(6,8);
+  hh = sth.substring(0,2);   //mm = sth.substring(3,5);ss = sth.substring(6,8);
   int hhh = hh.toInt();
   if ( hhh == 6 || hhh == 19)
     water(); //註解1號
