@@ -1,27 +1,23 @@
 #include <SoftwareSerial.h>
 #include <DS1302.h>
 
-
 #define RTC_RST 10
 #define RTC_DAT 9
 #define RTC_CLOCK 8
 #define BT_RX 7
 #define BT_TX 6
+#define relay_pin 2
 
+DS1302 rtc(10, 9, 8);
+SoftwareSerial BT(7, 6);
 
 String sth = ""; //接受時間回傳值
 String hh = "";
 String mm = "";
 String ss = "";
+String message=""; //藍芽接收字串
 
-String message="";
-
-bool water_flag = true;
-
-#define relay_pin 2
-
-DS1302 rtc(10, 9, 8);
-SoftwareSerial BT(7, 6);
+bool water_flag = true;  //調控澆水開關
 
 void set_time(){
   rtc.halt(false);
@@ -49,7 +45,7 @@ void water(){
 }
 
 void auto_pull(int mode){
-  // this is debug mode
+  // this is a debug mode
   // continue pull out water untill you stop
   if ( mode == 1 )
     digitalWrite(relay_pin, 1);
