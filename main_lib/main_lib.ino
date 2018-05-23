@@ -44,6 +44,7 @@ void auto_pull(int mode){
 }
 
 void setup() {
+  BT.begin(9600);
   Serial.begin(9600);
   //set_time();  //第一次傳就好
   pinMode(relay_pin,OUTPUT);
