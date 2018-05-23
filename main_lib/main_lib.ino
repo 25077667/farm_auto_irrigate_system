@@ -23,7 +23,7 @@ void water(){
   // average output water in balence line is 69.6 ml/s
   //evaluate 8 plants in our project
   digitalWrite(relay_pin, 1);
-  delay(8000);   //therefore we pull over 560ml/time
+  delay(20000);   //therefore we pull over 1392ml/time
   digitalWrite(relay_pin, 0);
 
 }
@@ -36,7 +36,7 @@ void setup() {
 
 void loop() {
   //Serial.println("hello");
-  //delay(1000);
+  delay(600000);
   sth = rtc.getTimeStr();
   hh = sth.substring(0,2);
   //mm = sth.substring(3,5);
