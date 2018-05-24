@@ -4,13 +4,11 @@
 #define RTC_RST 10
 #define RTC_DAT 9
 #define RTC_CLOCK 8
-#define BT_RX 7
-#define BT_TX 6
 #define relay_pin 2
 // relay_pin是給繼電器用的
 
 DS1302 rtc(10, 9, 8);
-SoftwareSerial BT(7, 6);
+SoftwareSerial BT(7, 6); //arduino RX/TX
 
 String sth = ""; //接受時間回傳值
 String hh = "";
