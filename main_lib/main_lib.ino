@@ -52,22 +52,14 @@ void auto_pull(int mode){
     digitalWrite(relay_pin, 0);
 }
 
+
+
 void check_bt_input(){
   // 手機用藍芽控制是否直接出水，手機記得自己關水
   // 這邊可能有問題，我猜他會有讀不到藍芽或者是無窮迴圈
   // 來這邊DEBUG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   if(BT.available()){
-    message = char(BT.read());
-    if ( message == '1'){
-      //auto_pull(1);
-      Serial.println(message);
-      break;
-    }
-    if ( message == '0'){
-      //auto_pull(0);
-      Serial.println(message);
-      break;
-    }
+      Serial.write(BT.read());
   }
 }
 
@@ -94,5 +86,4 @@ void loop() {
   // 因為只要是早上6點，就不會是早上7點，所以關了之後7點再開就不會撞到6點
   
   check_bt_input();
-  delay(10000);
 }
