@@ -22,8 +22,8 @@ void set_time(){
   rtc.halt(false);
   rtc.writeProtect(false);
   rtc.setDOW(FRIDAY);        // 設定週幾，如FRIDAY
-  rtc.setTime(11, 47, 0);     // 設定時間 時，分，秒 (24hr format)
-  rtc.setDate(5, 23, 2016);   // 設定日期 日，月，年
+  rtc.setTime(11, 50, 0);     // 設定時間 時，分，秒 (24hr format)
+  rtc.setDate(5, 24, 2016);   // 設定日期 日，月，年
 }
 void show_time(){
   for(int i=0; i<10;i++){
@@ -40,7 +40,8 @@ void water(){
   if ( water_flag == true ){
     water_flag = false;
     digitalWrite(relay_pin, 1);
-    delay(20000);   //therefore we pull over 1392ml/time
+    delay(1000);
+    //delay(20000);   //therefore we pull over 1392ml/time
     digitalWrite(relay_pin, 0);
   }
 }
@@ -69,14 +70,14 @@ void check_bt_input(){
 void setup() {
   Serial.begin(9600);
   BT.begin(9600);
-  //set_time();  //第一次傳就好
+  set_time();  //第一次傳就好
   pinMode(relay_pin,OUTPUT);
 }
 
 void loop() {
   //Serial.println("hello");
   //delay(600000);
-  //show_time();
+  show_time();
   sth = rtc.getTimeStr();
   hh = sth.substring(0,2);   //mm = sth.substring(3,5);ss = sth.substring(6,8);
   int hhh = hh.toInt();
