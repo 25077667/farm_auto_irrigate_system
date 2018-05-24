@@ -61,7 +61,8 @@ void check_bt_input(){
   // 這邊可能有問題，我猜他會有讀不到藍芽或者是無窮迴圈
   // 來這邊DEBUG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   if(BT.available()){
-      Serial.write(BT.read());
+      //Serial.write(BT.read());
+      digitalWrite(relay_pin, BT.read()-'0');
   }
 }
 
