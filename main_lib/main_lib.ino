@@ -60,10 +60,12 @@ void check_bt_input(){
     message = char(BT.read());
     if ( message == '1'){
       //auto_pull(1);
+      Serial.println(message);
       break;
     }
     if ( message == '0'){
       //auto_pull(0);
+      Serial.println(message);
       break;
     }
   }
