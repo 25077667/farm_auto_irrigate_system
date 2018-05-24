@@ -59,11 +59,11 @@ void check_bt_input(){
   if(BT.available()){
     message = char(BT.read());
     if ( message == '1'){
-      auto_pull(1);
+      //auto_pull(1);
       break;
     }
     if ( message == '0'){
-      auto_pull(0);
+      //auto_pull(0);
       break;
     }
   }
