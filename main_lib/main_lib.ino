@@ -20,7 +20,6 @@ String message=""; //藍芽接收字串
 bool water_flag = true;  //調控澆水開關
 
 void set_time(){
-  rtc.halt(false);
   rtc.writeProtect(false);
   rtc.setDOW(FRIDAY);        // 設定週幾，如FRIDAY
   rtc.setTime(19, 11, 0);     // 設定時間 時，分，秒 (24hr format)
@@ -69,6 +68,7 @@ void check_bt_input(){
 }
 
 void setup() {
+  rtc.halt(false);
   Serial.begin(9600);
   BT.begin(9600);
   set_time();  //第一次傳就好
