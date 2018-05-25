@@ -20,10 +20,9 @@ String message=""; //藍芽接收字串
 bool water_flag = true;  //調控澆水開關
 
 void set_time(){
-  rtc.halt(false);
   rtc.writeProtect(false);
   rtc.setDOW(FRIDAY);        // 設定週幾，如FRIDAY
-  rtc.setTime(19, 11, 0);     // 設定時間 時，分，秒 (24hr format)
+  rtc.setTime(21, 8, 0);     // 設定時間 時，分，秒 (24hr format)
   rtc.setDate(5, 25, 2016);   // 設定日期 日，月，年
 }
 void show_time(){
@@ -60,8 +59,6 @@ void auto_pull(int mode){
 
 void check_bt_input(){
   // 手機用藍芽控制是否直接出水，手機記得自己關水
-  // 這邊可能有問題，我猜他會有讀不到藍芽或者是無窮迴圈
-  // 來這邊DEBUG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   if(BT.available()){
       Serial.write(BT.read());
       digitalWrite(relay_pin, BT.read()-'0');
@@ -69,6 +66,7 @@ void check_bt_input(){
 }
 
 void setup() {
+  rtc.halt(false);
   Serial.begin(9600);
   BT.begin(9600);
   set_time();  //第一次傳就好
@@ -78,7 +76,7 @@ void setup() {
 void loop() {
   //Serial.println("hello");
   //delay(600000);
-  //show_time();
+  show_time();
   sth = rtc.getTimeStr();
   hh = sth.substring(0,2);   //mm = sth.substring(3,5);ss = sth.substring(6,8);
   int hhh = hh.toInt();
