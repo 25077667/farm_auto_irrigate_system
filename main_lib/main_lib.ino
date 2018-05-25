@@ -1,6 +1,7 @@
 #include <SoftwareSerial.h>
 #include <DS1302.h>
-
+// 事實上我不是很懂
+// 為什麼 (1)時間沒辦法寫上去、(2)藍芽可以在Serial瞬間看的到藍芽傳輸內容，可是relay_pin卻沒有寫上去
 #define RTC_RST 10
 #define RTC_DAT 9
 #define RTC_CLOCK 8
@@ -22,8 +23,8 @@ void set_time(){
   rtc.halt(false);
   rtc.writeProtect(false);
   rtc.setDOW(FRIDAY);        // 設定週幾，如FRIDAY
-  rtc.setTime(11, 50, 0);     // 設定時間 時，分，秒 (24hr format)
-  rtc.setDate(5, 24, 2016);   // 設定日期 日，月，年
+  rtc.setTime(19, 11, 0);     // 設定時間 時，分，秒 (24hr format)
+  rtc.setDate(5, 25, 2016);   // 設定日期 日，月，年
 }
 void show_time(){
   for(int i=0; i<10;i++){
@@ -45,7 +46,7 @@ void water(){
     digitalWrite(relay_pin, 0);
   }
 }
-
+/*
 void auto_pull(int mode){
   // this is a debug mode
   // continue pull out water untill you stop
@@ -54,7 +55,7 @@ void auto_pull(int mode){
   else
     digitalWrite(relay_pin, 0);
 }
-
+*/
 
 
 void check_bt_input(){
@@ -62,7 +63,7 @@ void check_bt_input(){
   // 這邊可能有問題，我猜他會有讀不到藍芽或者是無窮迴圈
   // 來這邊DEBUG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   if(BT.available()){
-      //Serial.write(BT.read());
+      Serial.write(BT.read());
       digitalWrite(relay_pin, BT.read()-'0');
   }
 }
@@ -77,13 +78,13 @@ void setup() {
 void loop() {
   //Serial.println("hello");
   //delay(600000);
-  show_time();
+  //show_time();
   sth = rtc.getTimeStr();
   hh = sth.substring(0,2);   //mm = sth.substring(3,5);ss = sth.substring(6,8);
   int hhh = hh.toInt();
-  if ( hhh == 6 || hhh == 19)
+  if ( hhh == 6 || hhh == 199)
     water(); //註解1號
-  if ( hhh == 7 || hhh == 20)
+  if ( hhh == 7 || hhh == 209)
     water_flag = true; //註解二號
     
   // 早上6點會去澆水(呼叫water()函式)，然後water會把water_flag關掉，早上7點再把water_flag打開，直到19點符合註解1號
