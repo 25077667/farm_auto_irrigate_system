@@ -32,8 +32,6 @@ void show_time(){
   }  
 }
 
-int a;
-
 void water(){
   // average output water in balence line is 69.6 ml/s
   //evaluate 8 plants in our project
