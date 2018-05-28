@@ -1,7 +1,7 @@
 #include <SoftwareSerial.h>
 #include <DS1302.h>
-// 事實上我不是很懂
-// 為什麼 (1)時間沒辦法寫上去、(2)藍芽可以在Serial瞬間看的到藍芽傳輸內容，可是relay_pin卻沒有寫上去
+// 有些可悲bug沒辦法再loop裡面call check_bt_input，只能寫死在loop裡
+// 時間寫不上去的話，拔電池等5秒，重刷主機板再裝電池
 #define RTC_RST 10
 #define RTC_DAT 9
 #define RTC_CLOCK 8
@@ -17,7 +17,7 @@ String mm = "";
 String ss = "";
 String message=""; //藍芽接收字串
 
-bool water_flag = true;  //調控澆水開關
+bool water_flag = true;  //調控澆水開關，true代表要澆水
 
 void set_time(){
   rtc.writeProtect(false);
@@ -32,30 +32,16 @@ void show_time(){
   }  
 }
 
-int a;
-
 void water(){
-  // average output water in balence line is 69.6 ml/s
-  //evaluate 8 plants in our project
+  // 這邊需要重新測量水量===============================================================
   if ( water_flag == true ){
     water_flag = false;
-    digitalWrite(relay_pin, 1);
+    digitalWrite(relay_pin, 1);//繼電器啟動電磁閥
     delay(1000);
-    //delay(20000);   //therefore we pull over 1392ml/time
+    //delay(20000);
     digitalWrite(relay_pin, 0);
   }
 }
-/*
-void auto_pull(int mode){
-  // this is a debug mode
-  // continue pull out water untill you stop
-  if ( mode == 1 )
-    digitalWrite(relay_pin, 1);
-  else
-    digitalWrite(relay_pin, 0);
-}
-*/
-
 
 void check_bt_input(){
   // 手機用藍芽控制是否直接出水，手機記得自己關水
@@ -74,8 +60,6 @@ void setup() {
 }
 
 void loop() {
-  //Serial.println("hello");
-  //delay(600000);
   //show_time();
   char readin = '0';
   sth = rtc.getTimeStr();
@@ -90,7 +74,7 @@ void loop() {
   // 因為只要是早上6點，就不會是早上7點，所以關了之後7點再開就不會撞到6點
   
   if(BT.available()){
-    readin = BT.read();
+    readin = BT.read();    
     Serial.write(readin);
     Serial.write("\n");
     digitalWrite(relay_pin, readin-'0');
