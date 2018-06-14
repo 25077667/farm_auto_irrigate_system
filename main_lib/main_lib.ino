@@ -22,8 +22,8 @@ bool water_flag = true;  //調控澆水開關，true代表要澆水
 void set_time(){
   rtc.writeProtect(false);
   rtc.setDOW(FRIDAY);        // 設定週幾，如FRIDAY
-  rtc.setTime(21, 8, 0);     // 設定時間 時，分，秒 (24hr format)
-  rtc.setDate(5, 25, 2016);   // 設定日期 日，月，年
+  rtc.setTime(9,0, 0);     // 設定時間 時，分，秒 (24hr format)
+  rtc.setDate(14, 6, 2018);   // 設定日期 日，月，年
 }
 void show_time(){
   for(int i=0; i<10;i++){
@@ -33,12 +33,11 @@ void show_time(){
 }
 
 void water(){
-  // 這邊需要重新測量水量===============================================================
+  // 每秒 18 ml
   if ( water_flag == true ){
     water_flag = false;
     digitalWrite(relay_pin, 1);//繼電器啟動電磁閥
-    delay(1000);
-    //delay(20000);
+    delay(185185); //185秒多
     digitalWrite(relay_pin, 0);
   }
 }
@@ -65,9 +64,9 @@ void loop() {
   sth = rtc.getTimeStr();
   hh = sth.substring(0,2);   //mm = sth.substring(3,5);ss = sth.substring(6,8);
   int hhh = hh.toInt();
-  if ( hhh == 6 || hhh == 19)
+  if ( hhh == 5 || hhh == 19)
     water(); //註解1號
-  if ( hhh == 7 || hhh == 20)
+  if ( hhh == 6 || hhh == 20)
     water_flag = true; //註解二號
     
   // 早上6點會去澆水(呼叫water()函式)，然後water會把water_flag關掉，早上7點再把water_flag打開，直到19點符合註解1號
