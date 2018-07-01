@@ -18,15 +18,17 @@ String ss = "";
 String message=""; //藍芽接收字串
 
 bool water_flag = true;  //調控澆水開關，true代表要澆水
+bool time_revise_flag = true;  //true 代表還沒調整時間
 
 void set_time(){
   rtc.writeProtect(false);
   rtc.setDOW(FRIDAY);        // 設定週幾，如FRIDAY
-  rtc.setTime(9,0, 0);     // 設定時間 時，分，秒 (24hr format)
-  rtc.setDate(14, 6, 2018);   // 設定日期 日，月，年
+  rtc.setTime(13,32, 0);     // 設定時間 時，分，秒 (24hr format)
+  rtc.setDate(1, 7, 2018);   // 設定日期 日，月，年
 }
 void show_time(){
   for(int i=0; i<10;i++){
+    Serial.println(rtc.getDateStr());
     Serial.println(rtc.getTimeStr());
     delay(1000);
   }  
@@ -50,6 +52,13 @@ void check_bt_input(){
   }
 }
 
+void time_revising(String hh,String mm,String ss){
+  if(time_revise_flag == true && hh == "00" && ss=="mm" ){
+    rtc.setTime(0,0,0);
+    time_revise_flag = false;
+  }
+}
+
 void setup() {
   rtc.halt(false);
   Serial.begin(9600);
@@ -62,7 +71,10 @@ void loop() {
   //show_time();
   char readin = '0';
   sth = rtc.getTimeStr();
-  hh = sth.substring(0,2);   //mm = sth.substring(3,5);ss = sth.substring(6,8);
+  hh = sth.substring(0,2);   
+  mm = sth.substring(3,5);
+  ss = sth.substring(6,8);
+  
   int hhh = hh.toInt();
   if ( hhh == 5 || hhh == 19)
     water(); //註解1號
@@ -78,5 +90,9 @@ void loop() {
     Serial.write("\n");
     digitalWrite(relay_pin, readin-'0');
   }
+
+  time_revising(hh, mm, ss);
+  if (hhh == 5)
+    time_revise_flag = true;
   //check_bt_input();
 }
