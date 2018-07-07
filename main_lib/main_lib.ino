@@ -23,8 +23,8 @@ bool time_revise_flag = true;  //true 代表還沒調整時間
 void set_time(){
   rtc.writeProtect(false);
   rtc.setDOW(FRIDAY);        // 設定週幾，如FRIDAY
-  rtc.setTime(13, 32, 0);     // 設定時間 時，分，秒 (24hr format)
-  rtc.setDate(1, 7, 2018);   // 設定日期 日，月，年
+  rtc.setTime(12, 13, 0);     // 設定時間 時，分，秒 (24hr format)
+  rtc.setDate(7, 7, 2018);   // 設定日期 日，月，年
 }
 void show_time(){
   for(int i=0; i<10;i++){
