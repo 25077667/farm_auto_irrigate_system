@@ -1,8 +1,11 @@
 #include <SoftwareSerial.h>
 #include <DS1302.h>
+
 // 時間寫不上去的話，拔電池等5秒，重刷主機板再裝電池
-// DS1302真的很糟糕，平均每25min就會自己往前跳20秒，讓我沒事還要寫一個修正時間的 time_revising() 函式
-// 而且我不可能一直看他的log，不知道他時間到底何時會往前跳，只能很消極的每天挪回18分鐘，一段時間之後還是要手動重新修正時間
+// DS1302真的很糟糕，有時候時間會往前跳，有時候不會
+// 最後我的修正方式就是delay一秒再判斷處理
+// 希望永無bug!!!
+
 #define RTC_RST 10
 #define RTC_DAT 9
 #define RTC_CLOCK 8
@@ -23,8 +26,8 @@ bool time_revise_flag = true;  //true 代表還沒調整時間
 void set_time(){
   rtc.writeProtect(false);
   rtc.setDOW(FRIDAY);        // 設定週幾，如FRIDAY
-  rtc.setTime(12, 13, 0);     // 設定時間 時，分，秒 (24hr format)
-  rtc.setDate(7, 7, 2018);   // 設定日期 日，月，年
+  rtc.setTime(15, 00, 0);     // 設定時間 時，分，秒 (24hr format)
+  rtc.setDate(7, 12, 2018);   // 設定日期 日，月，年
 }
 void show_time(){
   for(int i=0; i<10;i++){
@@ -44,11 +47,27 @@ void water(){
   }
 }
 
-void time_revising(String hh,String mm ){
-  if(time_revise_flag == true && hh == "00" && mm=="18" ){
-    rtc.setTime(0,0,0);
+void time_revising(String hh, String mm, String ss){
+  /*
+    if(time_revise_flag == true && hh == "00" && mm=="18" ){
+    rtc.setTime(0,3,0);
     time_revise_flag = false;
   }
+  */
+  int hh_int = hh.toInt(), mm_int = mm.toInt(), ss_int = ss.toInt();
+  
+  delay(1000);
+  String get_time_after_a_second = rtc.getTimeStr();
+  String dm = get_time_after_a_second.substring(3,5);
+  String ds = get_time_after_a_second.substring(6,8);
+  
+  if( ((ds.toInt()-ss_int) != 1) && ss_int <= 59){
+    rtc.setTime(hh_int, mm_int , ss.toInt()+1);
+  }
+  else if(ds.toInt() > 59){
+    rtc.setTime(hh_int, mm_int+1 , 0);
+  }
+  
 }
 
 void setup() {
@@ -65,7 +84,7 @@ void loop() {
   sth = rtc.getTimeStr();
   hh = sth.substring(0,2);   
   mm = sth.substring(3,5);
-  //ss = sth.substring(6,8);
+  ss = sth.substring(6,8);
   
   int hhh = hh.toInt();
   if ( hhh == 5 || hhh == 19)
@@ -86,5 +105,5 @@ void loop() {
     digitalWrite(relay_pin, readin-'0');
   }
 
-  time_revising(hh, mm);
+  time_revising(hh, mm, ss);
 }
