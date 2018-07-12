@@ -64,7 +64,7 @@ void time_revising(String hh, String mm, String ss){
   if( ((ds.toInt()-ss_int) != 1) && ss_int <= 59){
     rtc.setTime(hh_int, mm_int , ss.toInt()+1);
   }
-  else if(ds.toInt() >= 59){
+  if(ds.toInt() > 59){
     rtc.setTime(hh_int, mm_int+1 , 0);
   }
   
