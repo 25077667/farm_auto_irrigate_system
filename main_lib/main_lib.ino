@@ -21,20 +21,22 @@ String mm = "";
 String ss = "";
 
 bool water_flag = true;  //調控澆水開關，true代表要澆水
-bool time_revise_flag = true;  //true 代表還沒調整時間
+bool time_revise_flag = true;  //true 要改時間
+int count = 1;
+
 
 void set_time(){
   rtc.writeProtect(false);
-  rtc.setDOW(FRIDAY);        // 設定週幾，如FRIDAY
-  rtc.setTime(15, 00, 0);     // 設定時間 時，分，秒 (24hr format)
-  rtc.setDate(7, 12, 2018);   // 設定日期 日，月，年
+  rtc.setDOW(SATURDAY);        // 設定週幾，如FRIDAY
+  rtc.setTime(17, 0, 0);     // 設定時間 時，分，秒 (24hr format)
+  rtc.setDate(7, 21, 2018);   // 設定日期 日，月，年
 }
 void show_time(){
-  for(int i=0; i<10;i++){
+  for(int i=0; i<2;i++){
     Serial.println(rtc.getDateStr());
     Serial.println(rtc.getTimeStr());
     delay(1000);
-  }  
+  }
 }
 
 void water(){
@@ -55,19 +57,19 @@ void time_revising(String hh, String mm, String ss){
   }
   */
   int hh_int = hh.toInt(), mm_int = mm.toInt(), ss_int = ss.toInt();
-  
+
   delay(1000);
   String get_time_after_a_second = rtc.getTimeStr();
   String dm = get_time_after_a_second.substring(3,5);
   String ds = get_time_after_a_second.substring(6,8);
-  
+
   if( ((ds.toInt()-ss_int) != 1) && ss_int <= 59){
     rtc.setTime(hh_int, mm_int , ss.toInt()+1);
   }
   if(ds.toInt() > 59){
     rtc.setTime(hh_int, mm_int+1 , 0);
   }
-  
+
 }
 
 void setup() {
@@ -80,12 +82,13 @@ void setup() {
 
 void loop() {
   //show_time();
-  char readin = '0';
+  time_revise_flag = true;
+  String readin = "0";
   sth = rtc.getTimeStr();
-  hh = sth.substring(0,2);   
+  hh = sth.substring(0,2);
   mm = sth.substring(3,5);
   ss = sth.substring(6,8);
-  
+
   int hhh = hh.toInt();
   if ( hhh == 5 || hhh == 19)
     water(); //註解1號
@@ -93,17 +96,33 @@ void loop() {
     time_revise_flag = true;
     water_flag = true; //註解二號
   }
-    
+
   // 早上5點會去澆水(呼叫water()函式)，然後water會把water_flag關掉，早上6點再把water_flag打開，直到19點符合註解1號
   // 因為只要是早上5點，就不會是早上6點，所以關了之後6點再開就不會撞到5點
   // 早上6點，把time_revise_flag打開，讓晚上00:18可以再用
-  
+
   if(BT.available()){
-    readin = BT.read();    
-    Serial.write(readin);
+    readin = BT.readString();
+    Serial.print(readin);
     Serial.write("\n");
-    digitalWrite(relay_pin, readin-'0');
+    //==========================================================
+    if(readin[0]=='s')
+    {
+      time_revise_flag = false;
+      String string_h = readin.substring(1,3), string_m = readin.substring(4,6), string_s = readin.substring(7,9);
+      int get_h = string_h.toInt(); //季的去app inventor增加輸出判斷，萬一分鐘=0，或是秒鐘=0，要把輸出強制改成瞭位數
+      int get_m = string_m.toInt();
+      int get_s = string_s.toInt();
+      Serial.print(get_h);Serial.print("\n");Serial.print(get_m);Serial.print("\n");Serial.print(get_s);Serial.print("\n");
+      rtc.setTime(get_h, get_m , get_s);
+      
+      //===================================================================================
+
+    }
+    else
+      digitalWrite(relay_pin, readin[0]-'0');
   }
 
-  time_revising(hh, mm, ss);
+  if(hhh != 5 && hhh != 19 && time_revise_flag == true)
+    time_revising(hh, mm, ss);
 }
