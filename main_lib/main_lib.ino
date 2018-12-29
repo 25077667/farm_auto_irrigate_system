@@ -14,15 +14,14 @@ SoftwareSerial BT(7, 6); //arduino RX/TX
 
 void set_time(){
   Clock.setYear(18);
-  Clock.setMonth(10);
-  Clock.setDate(14);
-  Clock.setDoW(6);
-  Clock.setHour(17);	//24小時制
-  Clock.setMinute(13);
+  Clock.setMonth(12);
+  Clock.setDate(9);
+  Clock.setDoW(0);
+  Clock.setHour(11);	//24小時制
+  Clock.setMinute(44);
   Clock.setSecond(0);
 }
 void show_time(){
-  for(int i=0; i<2;i++){
       Serial.print(Clock.getYear(), DEC);
       Serial.print("-");
       Serial.print(Clock.getMonth(Century), DEC);
@@ -36,10 +35,9 @@ void show_time(){
       Serial.print(":");
       Serial.println(Clock.getSecond(), DEC);
       delay(1000);
-  }
 }
 
-void water(int hh){
+void water(){
   // 每秒 18 ml
   if ( water_flag == true ){
     water_flag = false;
@@ -54,20 +52,20 @@ void setup() {
   BT.begin(9600);
   
   Wire.begin();// Start the I2C interface
-  set_time();  //第一次傳就好
+  /*set_time();  第一次傳就好*/
   pinMode(relay_pin,OUTPUT);
 }
 
 void loop(){
-  show_time();
+  //show_time();
   String readin = "0";
   int hh = Clock.getHour(h12,PM);
   
-  if(hh == 5 || hh == 19)
-	water(hh);
+  if(hh == 6 || hh == 16)
+	  water();
 	//早上5點 晚上7點澆水
-  if(hh == 6 || hh == 20)
-	water_flag = true;
+  if(hh == 7 || hh == 17)
+	  water_flag = true;
 
   if(BT.available()){
     readin = BT.readString();
