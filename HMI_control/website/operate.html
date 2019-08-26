@@ -7,7 +7,7 @@
 <html>
 
 <head>
-    <title>FarmCtrl-HMI</title>
+    <title>Generic - Phantom by HTML5 UP</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -54,83 +54,61 @@
         <!-- Main -->
         <div id="main">
             <div class="inner">
-                <header>
-                    <h1>This is a Farm control interface<br /></h1>
-                    <p>Farm control at 阿公家 </p>
-                </header>
-                <section class="tiles">
-                    <article class="style1">
-                        <span class="image">
-							<img src="images/pic01.jpg" alt="" />
-						</span>
-                        <a href="generic.html">
-                            <!--總表界面，5秒刷新-->
-                            <h2>資訊總表</h2>
-                            <div class="content">
-                                <p>即時環境參數</p>
-                            </div>
-                        </a>
-                    </article>
-                    <article class="style2">
-                        <span class="image">
-							<img src="images/pic02.jpg" alt="" />
-						</span>
-                        <a href="operate.html">
-                            <!--https://www.w3schools.com/howto/howto_js_rangeslider.asp-->
-                            <!--對機器下指令，需要身份認證-->
-                            <h2>操作界面</h2>
-                            <div class="content">
-                                <p>控制機器動作</p>
-                            </div>
-                        </a>
-                    </article>
-                    <article class="style3">
-                        <span class="image">
-							<img src="images/pic03.jpg" alt="" />
-						</span>
-                        <a href="thisHMI.html">
-                            <h2>這台電腦</h2>
-                            <!--這台控制器的升降...-->
-                            <div class="content">
-                                <p>這台電腦的操作</p>
-                            </div>
-                        </a>
-                    </article>
-                    <article class="style4">
-                        <span class="image">
-							<img src="images/pic04.jpg" alt="" />
-						</span>
-                        <a href="camera.html">
-                            <h2>攝影機</h2>
-                            <div class="content">
-                                <p>敬請期待</p>
-                            </div>
-                        </a>
-                    </article>
-                    <article class="style5">
-                        <span class="image">
-							<img src="images/pic05.jpg" alt="" />
-						</span>
-                        <a href="smartHome.html">
-                            <h2>智慧家庭</h2>
-                            <div class="content">
-                                <p>敬請期待</p>
-                            </div>
-                        </a>
-                    </article>
-                    <article class="style6">
-                        <span class="image">
-							<img src="images/pic06.jpg" alt="" />
-						</span>
-                        <a href="manual.html">
-                            <h2>使用手冊</h2>
-                            <div class="content">
-                                <p>如何使用</p>
-                            </div>
-                        </a>
-                    </article>
-
-                </section>
+                <h1>操作界面</h1>
+                <hr>
+                <div class='pigHouse'>
+                    <!--https://www.w3schools.com/howto/howto_js_rangeslider.asp
+					https://blog.csdn.net/u013347241/article/details/51560290
+				-->
+                    <h2 style="text-align: center;">豬寮</h2>
+                    自動澆水、人為澆水、自動蓋網
+                    <div>
+                        <label class="switch">
+                        <input type="checkbox">
+                            <span class="slider round"></span>
+                    </label>
+                    </div>
+                </div>
+                <div class='sugarCane'>
+                    <h2 style="text-align: center;">甘蔗</h2>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
+                            濕度
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
+                            溫度
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
+                            紫外線
+                        </div>
+                    </div>
+                </div>
+                <div class='backyard'>
+                    <h2 style="text-align: center;">後院</h2>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
+                            濕度
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
+                            溫度
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
+                            紫外線
+                        </div>
+                    </div>
+                </div>
+                update time:
+                <div id="time"> </div>
+                <br>
+                <button><a href="index.html">回上頁</a></button>
             </div>
         </div>
 
