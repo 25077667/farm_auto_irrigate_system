@@ -221,9 +221,9 @@ input:focus+.sliderNet {
 }
 
 input:checked+.sliderNet:before {
-    -webkit-transform: translateX(200px);
-    -ms-transform: translateX(200px);
-    transform: translateX(200px);
+    -webkit-transform: translateX(780%);
+    -ms-transform: translateX(780%);
+    transform: translateX(780%);
 }
 
 
