@@ -178,7 +178,7 @@ progress-bar-stripes {
 .switch {
     position: relative;
     display: inline-block;
-    width: 240px;
+    width: 55%;
     height: 34px;
 }
 
@@ -221,9 +221,9 @@ input:focus+.sliderNet {
 }
 
 input:checked+.sliderNet:before {
-    -webkit-transform: translateX(780%);
-    -ms-transform: translateX(780%);
-    transform: translateX(780%);
+    -webkit-transform: translateX(770%);
+    -ms-transform: translateX(770%);
+    transform: translateX(770%);
 }
 
 
