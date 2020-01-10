@@ -7,10 +7,11 @@
 <html>
 
 <head>
-    <title>Camera</title>
+    <title>History</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
@@ -55,22 +56,42 @@
         <!-- Main -->
         <div id="main">
             <div class="inner">
-                <h1>攝影機</h1>
+                <h1>過去紀錄</h1>
                 <hr>
-                <div class='pigHouse'>
-                    <h2 style="text-align: center;">Camera 1</h2>
-                    <video id="videoplayer" controls>dash.all.js</video>
+                <!--https://chartjs-doc.abingoal.com/charts/line.html-->
+                <div style="width:window.innerWidth">
+                    <canvas id="historyChart"></canvas>
+                    <script>
+                        var history_ctx = document.getElementById("historyChart");
+                        var historyChart = new Chart(history_ctx, {
+                            type: 'line',
+                            data: {
+                                labels: ["Day1", "Day2", "Day3", "Day4", "Day5"],
+                                datasets: [{
+                                    label: '濕度',
+                                    data: [0.7, 0.3, 0.1, 0.6, 0.9],
+                                    backgroundColor: [
+                                        'rgba(153, 102, 255, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(153, 102, 255, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true,
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    </script>
+                </div>
 
-                </div>
-                <div class='sugarCane'>
-                    <h2 style="text-align: center;">Camera 2</h2>
-                    <video id="videoplayer" controls>dash.all.js</video>
-                </div>
-                <div class='backyard'>
-                    <h2 style="text-align: center;">Camera 3</h2>
-                    <video id="videoplayer" controls>dash.all.js</video>
-                </div>
-                update time:
                 <div id="time"> </div>
                 <br>
                 <button onclick='javascript:history.go(-1)'>回上頁</button>

@@ -9,18 +9,18 @@ bool h12;
 bool PM;
 bool Century=false;
 bool had_been_irrigated = false;
-int morning = 6;
-int night = 16;
+int morning;
+int night;
 unsigned long watering_delay;
 SoftwareSerial BT(7, 6); //arduino RX/TX
 
 void set_time(){
-  Clock.setYear(18);
-  Clock.setMonth(12);
-  Clock.setDate(9);
+  Clock.setYear(19);
+  Clock.setMonth(1);
+  Clock.setDate(26);
   Clock.setDoW(0);
   Clock.setHour(11);	//the format is 24 hours
-  Clock.setMinute(44);
+  Clock.setMinute(14);
   Clock.setSecond(0);
 }
 
@@ -91,8 +91,10 @@ void setup() {
   BT.begin(9600);
   Wire.begin();// Start the I2C interface
   pinMode(relay_pin,OUTPUT);
-  /*set_time();  just upload it in the first time*/
+  //set_time();  //just upload it in the first time
   watering_delay = 370370;
+  morning = 6;
+  night = 16;
 }
 
 void loop(){
