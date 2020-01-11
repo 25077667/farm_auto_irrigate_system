@@ -60,13 +60,15 @@
                 <hr>
                 <!--https://chartjs-doc.abingoal.com/charts/line.html-->
                 <div style="text-align: center;">
-                    
-                    <canvas id="historyChart", width = window.innerWidth></canvas>
+
+                    <canvas id="historyChart"></canvas>
                     <script>
                         var randomScalingFactor = function () {
                             return Math.round(Math.random() * 100);
                         };
                         var history_ctx = document.getElementById("historyChart");
+                        history_ctx.width = window.innerWidth;
+                        history_ctx.height = window.innerHeight;
                         var config = {
                             type: 'line',
                             data: {
@@ -78,7 +80,7 @@
                                         label: '濕度',
                                         fill: false,
                                         hidden: false,
-                                        backgroundColor: 'rgb(75, 192, 192, 0.2)',
+                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
                                         borderColor: 'rgba(75, 192, 192, 1)',
                                         data: [
                                             randomScalingFactor(),
