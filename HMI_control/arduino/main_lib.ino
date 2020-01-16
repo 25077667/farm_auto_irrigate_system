@@ -148,15 +148,16 @@ void serialInput() {
             doNet(true);
         else if (readIn == String("!NET"))
             doNet(false);
-        else if (readIn.substring(0, 9) == "Cool down")           // 'q' is the end of string
+        else if (readIn.substring(0, 9) == "Cool down") {         // 'q' is the end of string
             goal.temperature = stringToInt(readIn.substring(9));  //cool down to the value
-        else if (readIn.substring(0, 9) == "Wet")                 // format: Wet90q, means 90% of wet in mod
+            doCoolDown();
+        } else if (readIn.substring(0, 9) == "Wet") {  // format: Wet90q, means 90% of wet in mod
             goal.wet = stringToInt(readIn.substring(3)) * 0.01;
-        else if (readIn == "Auto mode")
+            doIrrigate();
+        } else if (readIn == "Auto mode")
             autoMode = true;
         else if (readIn == "!Auto mode")
             autoMode = false;
-        action();
     }
 }
 
