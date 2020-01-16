@@ -148,8 +148,8 @@ void serialInput() {
             doNet(true);
         else if (readIn == String("!NET"))
             doNet(false);
-        else if (readIn.substring(0, 9) == "Cool down") {         // 'q' is the end of string
-            goal.temperature = stringToInt(readIn.substring(9));  //cool down to the value
+        else if (readIn.substring(0, 9) == "Cool down") {
+            goal.temperature = stringToInt(readIn.substring(9));
             doCoolDown();
         } else if (readIn.substring(0, 9) == "Wet") {  // format: Wet90q, means 90% of wet in mod
             goal.wet = stringToInt(readIn.substring(3)) * 0.01;
