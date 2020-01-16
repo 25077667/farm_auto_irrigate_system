@@ -13,15 +13,44 @@
 DS3231 Clock;
 bool setPM = false;  //set it to false
 bool Century = false;
-bool had_been_irrigated = false;
+bool autoMode = false;
 int morning;
 int night;
 unsigned long irrigateDuration;
-SoftwareSerial BT(7, 6);                 //arduino RX/TX
+unsigned long actPeriod;
+unsigned long prevCheckTime;
 GUVAS12SD uvSensor(A0);                  //UVs
 OneWire oneWire(ONE_WIRE_BUS);           //wire of temp
 DallasTemperature tempSensor(&oneWire);  //temperature
 DHT dhtSensor(DHT_PIN, DHTTYPE);
+
+struct Goal {
+    float wet, temperature;
+    int uvIndex;
+    Goal(float _wet, float _temp, int _uv) {
+        wet = _wet;
+        temperature = _temp;
+        uvIndex = _uv;
+    }
+} goal;
+
+int stringToInt(String _str) {
+    // with q be the end of string
+    // i'm not sure it exist '\0' in the end of string
+    int index = 0;
+    int tmp = 0;
+    while (_str[index] != 'q') {
+        tmp = tmp * 10 + (_str[index] - '0');
+        index++;
+    }
+    return tmp;
+}
+
+unsigned long currentTimeBySecond() {
+    unsigned long days = Clock.getYear() * 365 + Clock.getMonth(Century) * 30 + Clock.getDate();
+    unsigned long seconds = (int)Clock.getHour(false, setPM))* 3600 + Clock.getMinute() * 60 + Clock.getSecond();
+    return days * 86400 + seconds;
+}
 
 void setTime() {
     Clock.setYear(20);
@@ -79,48 +108,67 @@ void printCurrentTime() {
 }
 
 void doIrrigate() {
-    if (had_been_irrigated == false) {
-        had_been_irrigated = true;
-        digitalWrite(RELAY_PIN, true);
-        delay(irrigateDuration);
-        digitalWrite(RELAY_PIN, false);
+    digitalWrite(RELAY_PIN, true);
+    delay(irrigateDuration);
+    digitalWrite(RELAY_PIN, false);
+}
+
+void doNet(bool openNet) {
+    if (openNet)
+        // relay net on
+        ;
+    else
+        //relay net invert
+        ;
+}
+
+void doCoolDown() {
+    if (abs(getTemperature() - goal.temperature) >= 2) {
+        //spray or do something
     }
 }
 
-void bluetooth_control() {
-    String readin = "0";
-    if (BT.available()) {
-        readin = BT.readString();
-        Serial.print(readin);
-        Serial.write("\n");
-        if (readin[0] == '0')
-            return;
-        else if (readin[0] == 'm')  //set morning doIrrigate time
-            morning = (readin[1] - '0') * 10 + (readin[2] - '0');
+void action() {
+    unsigned long current = currentTimeBySecond();
+    if (current - prevCheckTime >= actPeriod) {
+        if (getDegreeOfWet() < goal.wet)
+            doIrrigate();
+        if (getTemperature > goal.temperature)
+            doCoolDown();
+        if (getUV > goal.uvIndex)
+            doNet(getUV > goal.uvIndex);
+        prevCheckTime = current;
+    }
+}
 
-        else if (readin[0] == 'a')  //set afternoon doIrrigate time
-            night = (readin[1] - '0') * 10 + (readin[2] - '0');
+void serialInput() {
+    if (Serial.available()) {
+        String readIn = Serial.read();
+        if (readIn == String("NET"))
+            doNet(true);
+        else if (readIn == String("!NET"))
+            doNet(false);
+        else if (readIn.substring(0, 9) == "Cool down")           // 'q' is the end of string
+            goal.temperature = stringToInt(readIn.substring(9));  //cool down to the value
+        else if (readIn.substring(0, 9) == "Wet")                 // format: Wet90q, means 90% of wet in mod
+            goal.wet = stringToInt(readIn.substring(3)) * 0.01;
+        else if (readIn == "Auto mode")
+            autoMode = true;
+        else if (readIn == "!Auto mode")
+            autoMode = false;
+        action();
+    }
+}
 
-        else if (readin[0] == 's') {  //set irrigating duration time
-            int index = 1;
-            unsigned long tmp = 0;
-            while (readin[index] != 'q') {
-                tmp = tmp * 10 + (readin[index] - '0');
-                index++;
-            }
-            irrigateDuration = tmp;
-        }
-
-        else if (readin[0] == 'w')  // open the relay
-            digitalWrite(RELAY_PIN, readin[1] - '0');
-        else
-            Serial.print("readin failed!\n");
+void serialOutput() {
+    if (Serial.available() && currentTimeBySecond() - prevCheckTime > actPeriod) {
+        Serial.println(getAllInfo());
+        prevCheckTime = currentTimeBySecond();
     }
 }
 
 void setup() {
     Serial.begin(9600);
-    BT.begin(9600);
     Wire.begin();  // Start the I2C interface
     tempSensor.begin();
     dhtSensor.begin();
@@ -130,16 +178,16 @@ void setup() {
     irrigateDuration = 370370;  //ms
     morning = 6;
     night = 16;
+    actPeriod = 900;  //15min
+    prevCheckTime = 0;
+    goal = Goal(0.7, 21, 7);
+    autoMode = true;
 }
 
 void loop() {
-    printCurrentTime();
-    int current_hour = Clock.getHour(false, setPM);
-
-    if (current_hour == morning || current_hour == night)
-        doIrrigate();
-    else if (current_hour == morning + 1 || current_hour == night + 1)
-        had_been_irrigated = false;
-
-    bluetooth_control();
+    //printCurrentTime();
+    serialInput();
+    if (autoMode)
+        action();
+    serialOutput();
 }
