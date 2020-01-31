@@ -1,7 +1,7 @@
 #include <DHT.h>  //depend on Adafruit_Sensor, didn't install yet
 #include <DS3231.h>
 #include <DallasTemperature.h>
-#include <GUVA-S12SD.h>
+#include <GUVA_S12SD.h>
 #include <OneWire.h>
 #include <SoftwareSerial.h>
 #include <Wire.h>
@@ -11,7 +11,8 @@
 #define DHTTYPE DHT11
 
 DS3231 Clock;
-bool setPM = false;  //set it to false
+bool setPM = false;
+bool h12 = false;
 bool Century = false;
 bool autoMode = false;
 int morning;
@@ -19,14 +20,15 @@ int night;
 unsigned long irrigateDuration;
 unsigned long actPeriod;
 unsigned long prevCheckTime;
-GUVAS12SD uvSensor(A0);                  //UVs
-OneWire oneWire(ONE_WIRE_BUS);           //wire of temp
+GUVA_S12SD uvSensor;                  //UVs
+OneWire oneWire(ONE_WIRE_PIN);           //wire of temp
 DallasTemperature tempSensor(&oneWire);  //temperature
 DHT dhtSensor(DHT_PIN, DHTTYPE);
 
 struct Goal {
     float wet, temperature;
     int uvIndex;
+    Goal(){}
     Goal(float _wet, float _temp, int _uv) {
         wet = _wet;
         temperature = _temp;
@@ -48,7 +50,7 @@ int stringToInt(String _str) {
 
 unsigned long currentTimeBySecond() {
     unsigned long days = Clock.getYear() * 365 + Clock.getMonth(Century) * 30 + Clock.getDate();
-    unsigned long seconds = (int)Clock.getHour(false, setPM))* 3600 + Clock.getMinute() * 60 + Clock.getSecond();
+    unsigned long seconds = (int)(Clock.getHour(h12, setPM))* 3600 + Clock.getMinute() * 60 + Clock.getSecond();
     return days * 86400 + seconds;
 }
 
@@ -66,13 +68,13 @@ String getTime() {
     return String(Clock.getMonth(Century)) + String("-") +
            String(Clock.getDate()) + String("-") +
            String(Clock.getYear()) + String(" ") +
-           String((int)Clock.getHour(false, setPM)) + String(":") +
+           String((int)Clock.getHour(h12, setPM)) + String(":") +
            String(Clock.getMinute()) + String(":") +
            String(Clock.getSecond());
 }
 
 int getUV() {
-    return (int)uvSensor.index(uvSensor.read()) + 1;
+    return (int)uvSensor.UVIndex() + 1;
 }
 
 float getDegreeOfWet() {
@@ -133,17 +135,31 @@ void action() {
     if (current - prevCheckTime >= actPeriod) {
         if (getDegreeOfWet() < goal.wet)
             doIrrigate();
-        if (getTemperature > goal.temperature)
+        if (getTemperature() > goal.temperature)
             doCoolDown();
-        if (getUV > goal.uvIndex)
-            doNet(getUV > goal.uvIndex);
+        if (getUV() > goal.uvIndex)
+            doNet(getUV() > goal.uvIndex);
         prevCheckTime = current;
+    }
+}
+
+String serial2String(){
+    String s = "";
+    while (Serial.available()) {
+        char c = Serial.read();
+        if(c!='\n'){
+            s += c;
+        }
+        else
+          return s;
+        delay(5);    // 沒有延遲的話 UART 串口速度會跟不上Arduino的速度，會導致資料不完整
     }
 }
 
 void serialInput() {
     if (Serial.available()) {
-        String readIn = Serial.read();
+        String readIn = serial2String();
+        
         if (readIn == String("NET"))
             doNet(true);
         else if (readIn == String("!NET"))
@@ -171,6 +187,7 @@ void serialOutput() {
 void setup() {
     Serial.begin(9600);
     Wire.begin();  // Start the I2C interface
+    uvSensor.initialize(A0);
     tempSensor.begin();
     dhtSensor.begin();
     pinMode(RELAY_PIN, OUTPUT);
