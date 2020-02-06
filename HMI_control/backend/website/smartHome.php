@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript>
-		<link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+        <link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
 
 <body class="is-preload">
@@ -42,11 +42,11 @@
         <nav id="menu">
             <h2>Menu</h2>
             <ul>
-                <li><a href="index.html">首頁</a></li>
-                <li><a href="generic.html">資訊總表</a></li>
-                <li><a href="operate.html">操作界面</a></li>
-                <li><a href="smartHome.html">智慧家庭</a></li>
-                <li><a href="history.html">過去紀錄</a></li>
+                <li><a href="index.php">首頁</a></li>
+                <li><a href="generic.php">資訊總表</a></li>
+                <li><a href="operate.php">操作界面</a></li>
+                <li><a href="smartHome.php">智慧家庭</a></li>
+                <li><a href="history.php">過去紀錄</a></li>
                 <li><a href="manual.html">使用手冊</a></li>
                 <!--manual-->
             </ul>
@@ -59,8 +59,7 @@
                 <hr>
                 <div class='pigHouse'>
                     <!--https://www.w3schools.com/howto/howto_js_rangeslider.asp
-					https://blog.csdn.net/u013347241/article/details/51560290
-				-->
+					https://blog.csdn.net/u013347241/article/details/51560290-->
                     <h2 style="text-align: center;">豬寮</h2>
                     <div class="progress">
                         <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
@@ -166,7 +165,7 @@
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/moment.js"></script>
-    
+
 </body>
 
 </html>

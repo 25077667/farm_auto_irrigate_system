@@ -14,6 +14,34 @@
     <noscript>
         <link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
+<?php
+$raspiHeigh = readGoals()[3];
+function readGoals()
+{
+    if (($handle = fopen("Data/goal.csv", "r")) !== FALSE) {
+        $goals = fgetcsv($handle);
+    } else
+        echo "read goal error";
+    fclose($handle);
+    return $goals;
+}
+
+function writeHeigh($_value)
+{
+    if ($_value == NULL)
+        return;
+    $goals = readGoals();
+    $goals[3] = $_value;
+    if (($handle1 = fopen("Data/goal.csv", "w+")) !== FALSE) {
+        fputcsv($handle1, $goals);
+    } else
+        echo "write goal error";
+    fclose($handle1);
+    header("Refresh:0");    //refresh page
+}
+?>
+
+<!--Be careful https://www.w3school.com.cn/php/func_filesystem_fgetcsv.asp -->
 
 <body class="is-preload">
     <!-- Wrapper -->
@@ -42,11 +70,11 @@
         <nav id="menu">
             <h2>Menu</h2>
             <ul>
-                <li><a href="index.html">首頁</a></li>
-                <li><a href="generic.html">資訊總表</a></li>
-                <li><a href="operate.html">操作界面</a></li>
-                <li><a href="smartHome.html">智慧家庭</a></li>
-                <li><a href="history.html">過去紀錄</a></li>
+                <li><a href="index.php">首頁</a></li>
+                <li><a href="generic.php">資訊總表</a></li>
+                <li><a href="operate.php">操作界面</a></li>
+                <li><a href="smartHome.php">智慧家庭</a></li>
+                <li><a href="history.php">過去紀錄</a></li>
                 <li><a href="manual.html">使用手冊</a></li>
                 <!--manual-->
             </ul>
@@ -61,9 +89,10 @@
                     桌面當前高度
                     <form action="" method="POST">
                         <?php
-                        $raspiHeigh = 30;
                         echo '<input type="range" min="1" max="100" value=', $raspiHeigh, ' class="slider" name="height">';
-                        echo '目標高度: ', $_POST["height"]; ?>
+                        echo '目標高度: ', readGoals()[3], ' cm';
+                        writeHeigh($_POST["height"]);   //write height goal to goal.csv
+                        ?>
                         <!--當前高度 目標高度-->
                         <br> 其他參數
                         <input type="range" min="1" max="100" value="50" class="slider" id='someOther'>
