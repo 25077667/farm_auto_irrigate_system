@@ -4603,4 +4603,4 @@
 
 // writen by scc
 
-document.getElementById("time").innerHTML = "update time: " + moment().format("LTS");
+//document.getElementById("time").innerHTML = "update time: " + moment().format("LTS");

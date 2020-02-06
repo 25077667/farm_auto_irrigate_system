@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript>
-		<link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+        <link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
 
 <body class="is-preload">
@@ -58,12 +58,21 @@
                 <h1>這台電腦</h1>
                 <hr>
                 <div class="slidecontainer">
-                    桌面離地高度
-                    <input type="range" min="1" max="100" value="50" class="slider" id='desktopHight'>
-                    <br> 其他參數
-                    <input type="range" min="1" max="100" value="50" class="slider" id='someOther'>
+                    桌面當前高度
+                    <form action="" method="POST">
+                        <?php
+                        $raspiHeigh = 30;
+                        echo '<input type="range" min="1" max="100" value=', $raspiHeigh, ' class="slider" name="height">';
+                        echo '目標高度: ', $_POST["height"]; ?>
+                        <!--當前高度 目標高度-->
+                        <br> 其他參數
+                        <input type="range" min="1" max="100" value="50" class="slider" id='someOther'>
+                        <input type=submit value="送出">
+                    </form>
                 </div>
-                <div id="time"> </div>
+                <?php
+                echo '更新時間', '<div id="time">', date('d-m-Y h:i:s'), '</div> ';
+                ?>
                 <br>
                 <button onclick='javascript:history.go(-1)'>回上頁</button>
             </div>
