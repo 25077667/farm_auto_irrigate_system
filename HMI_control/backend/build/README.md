@@ -34,3 +34,6 @@ $ sudo apt update
 $ sudo apt upgrade
 $ sudo apt intall vim build-essential nginx php7.0-fpm -y
 ```
+
+# php setup
+[reference](https://blog.gtwang.org/iot/raspberry-pi-install-nginx-lightweight-web-server/2/)
