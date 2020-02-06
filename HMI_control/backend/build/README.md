@@ -8,22 +8,27 @@ You can get zip of img at [here](https://downloads.raspberrypi.org/raspbian/imag
 ```language=shell
 $ unzip 2017-09-07-raspbian-stretch.zip
 $ sudo dd bs=1M if=2017-09-07-raspbian-stretch.img of=/dev/sd*
-# /dev/sd* is based on your env.
+# /dev/sd* is based on your environment.
 ```
 
 then insert the micro SD to raspi, and boot it!
 
-# How to set WIFI?
+# How to set Wi-Fi?
 
 After boot and setup your eth0
 Then run this `setWIFI.sh`
 
 ```language=shell
+# Maybe you need to clone this repo. to get these files.
+$ git clone git@github.com:25077667/farm_auto_irrigate_system.git
+$ cd HMI_control/backend/build/
+
+#
 $ chmod +x setWIFI.sh
 $ ./setWIFI.sh
 ```
 
-# Set env
+# Set environment
 ```language=shell
 $ sudo apt update
 $ sudo apt upgrade
