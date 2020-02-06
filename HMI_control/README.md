@@ -5,3 +5,8 @@ in my thought i want to build a cental control pannel to handle all the endpoint
 and make it smarter, more usefull...
 
 on the other hand, i want to make my parents can use this HMI to grasp all the environment argument, and give it human decision.
+
+## Data/goal.csv format
+|temperature(C)|Humidity(%)|UV index|raspi Height(cm)|
+|-|-|-|-|
+|25|50.0|6|100|
