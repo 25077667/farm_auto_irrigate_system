@@ -1,4 +1,4 @@
-# On setting
+#On setting
 
 **You should install 2017-09-07-raspbian-stretch.img on to the SD card!**
 
@@ -23,4 +23,11 @@ Then run this `setWIFI.sh`
 ```language=shell
 $ chmod +x setWIFI.sh
 $ ./setWIFI.sh
+```
+
+# Set env
+```language=shell
+$ sudo apt update
+$ sudo apt upgrade
+$ sudo apt intall vim build-essential nginx php7.0-fpm -y
 ```
