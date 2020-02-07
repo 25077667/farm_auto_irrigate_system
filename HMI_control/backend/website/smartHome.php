@@ -57,64 +57,8 @@
             <div class="inner">
                 <h1>智慧家庭</h1>
                 <hr>
-                <div class='pigHouse'>
-                    <!--https://www.w3schools.com/howto/howto_js_rangeslider.asp
-					https://blog.csdn.net/u013347241/article/details/51560290-->
-                    <h2 style="text-align: center;">豬寮</h2>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
-                            濕度
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
-                            溫度
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
-                            紫外線
-                        </div>
-                    </div>
-
-                </div>
-                <div class='sugarCane'>
-                    <h2 style="text-align: center;">甘蔗</h2>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
-                            濕度
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
-                            溫度
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
-                            紫外線
-                        </div>
-                    </div>
-                </div>
-                <div class='backyard'>
-                    <h2 style="text-align: center;">後院</h2>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
-                            濕度
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
-                            溫度
-                        </div>
-                    </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
-                            紫外線
-                        </div>
-                    </div>
-                </div>
-                <div id="time"> </div>
+                <!--BODY-->
+                <?php echo '更新時間', '<div id="time">', date('d-m-Y h:i:s'), '</div> '; ?>
                 <br>
                 <button onclick='javascript:history.go(-1)'>回上頁</button>
             </div>

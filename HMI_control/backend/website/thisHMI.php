@@ -39,9 +39,8 @@ function writeHeigh($_value)
     fclose($handle1);
     header("Refresh:0");    //refresh page
 }
+// Be careful https://www.w3school.com.cn/php/func_filesystem_fgetcsv.asp
 ?>
-
-<!--Be careful https://www.w3school.com.cn/php/func_filesystem_fgetcsv.asp -->
 
 <body class="is-preload">
     <!-- Wrapper -->
