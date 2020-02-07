@@ -24,7 +24,7 @@
             <div class="inner">
 
                 <!-- Logo -->
-                <a href="index.html" class="logo">
+                <a href="index.php" class="logo">
                     <span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">FARM HMI</span>
                 </a>
 
@@ -42,11 +42,11 @@
         <nav id="menu">
             <h2>Menu</h2>
             <ul>
-                <li><a href="index.html">首頁</a></li>
-                <li><a href="generic.html">資訊總表</a></li>
-                <li><a href="operate.html">操作界面</a></li>
-                <li><a href="smartHome.html">智慧家庭</a></li>
-                <li><a href="history.html">過去紀錄</a></li>
+                <li><a href="index.php">首頁</a></li>
+                <li><a href="generic.php">資訊總表</a></li>
+                <li><a href="operate.php">操作界面</a></li>
+                <li><a href="smartHome.php">智慧家庭</a></li>
+                <li><a href="history.php">過去紀錄</a></li>
                 <li><a href="manual.html">使用手冊</a></li>
                 <!--manual-->
             </ul>
@@ -64,7 +64,7 @@
                         <span class="image">
 							<img src="images/pic01.jpg" alt="" />
 						</span>
-                        <a href="generic.html">
+                        <a href="generic.php">
                             <!--總表界面，5秒刷新-->
                             <h2>資訊總表</h2>
                             <div class="content">
@@ -76,7 +76,7 @@
                         <span class="image">
 							<img src="images/pic04.jpg" alt="" />
 						</span>
-                        <a href="operate.html">
+                        <a href="operate.php">
                             <!--https://www.w3schools.com/howto/howto_js_rangeslider.asp-->
                             <!--對機器下指令，需要身份認證-->
                             <h2>操作界面</h2>
@@ -89,7 +89,7 @@
                         <span class="image">
 							<img src="images/pic06.jpg" alt="" />
 						</span>
-                        <a href="thisHMI.html">
+                        <a href="thisHMI.php">
                             <h2>這台電腦</h2>
                             <!--這台控制器的升降...-->
                             <div class="content">
@@ -101,7 +101,7 @@
                         <span class="image">
 							<img src="images/pic02.jpg" alt="" />
 						</span>
-                        <a href="camera.html">
+                        <a href="camera.php">
                             <h2>攝影機</h2>
                             <div class="content">
                                 <p>敬請期待</p>
@@ -112,7 +112,7 @@
                         <span class="image">
 							<img src="images/pic05.jpg" alt="" />
 						</span>
-                        <a href="smartHome.html">
+                        <a href="smartHome.php">
                             <h2>智慧家庭</h2>
                             <div class="content">
                                 <p>敬請期待</p>
@@ -123,7 +123,7 @@
                         <span class="image">
 							<img src="images/pic03.jpg" alt="" />
 						</span>
-                        <a href="history.html">
+                        <a href="history.php">
                             <h2>過去紀錄</h2>
                             <div class="content">
                                 <p>智慧栽種參數</p>

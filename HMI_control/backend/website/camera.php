@@ -24,7 +24,7 @@
             <div class="inner">
 
                 <!-- Logo -->
-                <a href="index.html" class="logo">
+                <a href="index.php" class="logo">
                     <span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">FARM HMI</span>
                 </a>
 
@@ -42,11 +42,11 @@
         <nav id="menu">
             <h2>Menu</h2>
             <ul>
-                <li><a href="index.html">首頁</a></li>
-                <li><a href="generic.html">資訊總表</a></li>
-                <li><a href="operate.html">操作界面</a></li>
-                <li><a href="smartHome.html">智慧家庭</a></li>
-                <li><a href="history.html">過去紀錄</a></li>
+                <li><a href="index.php">首頁</a></li>
+                <li><a href="generic.php">資訊總表</a></li>
+                <li><a href="operate.php">操作界面</a></li>
+                <li><a href="smartHome.php">智慧家庭</a></li>
+                <li><a href="history.php">過去紀錄</a></li>
                 <li><a href="manual.html">使用手冊</a></li>
                 <!--manual-->
             </ul>

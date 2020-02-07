@@ -16,11 +16,11 @@ SoftwareSerial BT(7, 6); //arduino RX/TX
 
 void set_time() {
   Clock.setYear(20);
-  Clock.setMonth(1);
-  Clock.setDate(12);
+  Clock.setMonth(2);
+  Clock.setDate(2);
   Clock.setDoW(0);
-  Clock.setHour(10);	//the format is 24 hours
-  Clock.setMinute(27);
+  Clock.setHour(11);	//the format is 24 hours
+  Clock.setMinute(44);
   Clock.setSecond(0);
 }
 
