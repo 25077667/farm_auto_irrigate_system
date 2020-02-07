@@ -7,6 +7,6 @@ and make it smarter, more usefull...
 on the other hand, i want to make my parents can use this HMI to grasp all the environment argument, and give it human decision.
 
 ## Data/goal.csv format
-|temperature(C)|Humidity(%)|UV index|raspi Height(cm)|
-|-|-|-|-|
-|25|50.0|6|100|
+|temperature(C)|Humidity(%)|UV index|raspi Height(cm)|isAutoNet|
+|-|-|-|-|-|-|
+|25|50.0|6|100|1|

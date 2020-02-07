@@ -88,7 +88,7 @@ function writeHeigh($_value)
                     桌面當前高度
                     <form action="" method="POST">
                         <?php
-                        echo '<input type="range" min="1" max="100" value=', $raspiHeigh, ' class="slider" name="height">';
+                        echo '<input type="range" min="100" max="200" value=', $raspiHeigh, ' class="slider" name="height">';
                         echo '目標高度: ', readGoals()[3], ' cm';
                         writeHeigh($_POST["height"]);   //write height goal to goal.csv
                         ?>
