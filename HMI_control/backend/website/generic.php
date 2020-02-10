@@ -49,7 +49,7 @@ class BundleData
         $tailCSV = array();
         foreach($tail as $j)
             array_push($tailCSV, str_getcsv($j));
-        //echo $tailCSV, ' ', gettype($tailCSV);
+        echo $tailCSV, ' ', gettype($tailCSV);
         for ($j = $lines; $j != 0; $j--) {
             if ($tailCSV[$j][1] == $i) {
                 $this->temperature = $tailCSV[$j][2];
