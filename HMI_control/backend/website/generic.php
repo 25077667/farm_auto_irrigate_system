@@ -45,26 +45,31 @@ class BundleData
     {
         $lines = 5;
         $tail = explode("\n", tailCustom("Data/history", $lines, true));
-        //echo $tail, '<br>', gettype($tail);
         $tailCSV = array();
         foreach ($tail as $j)
             array_push($tailCSV, str_getcsv($j));
-        /*foreach ($tailCSV as $j) {
-            foreach ($j as $k)
-                echo $k, ' ';
-            echo '<br>';
-        }*/
-        for ($j = $lines; $j != 0; $j--) {
 
-            foreach($tailCSV[$j] as $k)
-                echo $k, ' | ';
-            echo '<br>';
+        for ($j = $lines; $j != 0; $j--) {
+            $counter = 0;
+            $doAssign = false;
+            foreach ($tailCSV[$j] as $k) {
+                if ($counter == 1 && $k == $i)
+                    $doAssign = true;
+                $counter++;
+                if($doAssign && $counter == 2)
+                    $this->temperature = $k;
+                if ($doAssign && $counter == 3)
+                    $this->hermidity = $k;
+                if ($doAssign && $counter == 4)
+                    $this->uvIndex = $k;
+            }
+
+            // Why here can't work?
             /*if ($tailCSV[$j][1] == $i) {
                 $this->temperature = $tailCSV[$j][2];
                 $this->hermidity = $tailCSV[$j][3];
                 $this->uvIndex = $tailCSV[$j][4];
                 break;*/
-            
         }
     }
 }
