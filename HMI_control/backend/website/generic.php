@@ -63,7 +63,7 @@ class BundleData
                 $this->temperature = $tailCSV[$j][2];
                 $this->hermidity = $tailCSV[$j][3];
                 $this->uvIndex = $tailCSV[$j][4];
-                break;
+                break;*/
             }
         }
     }
