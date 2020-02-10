@@ -135,12 +135,12 @@ for ($i = 0; $i < 3; $i++) {
                         </div>
                     </div>
                     <div class="progress">
-                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:<?php echo $machine[0]->getTemperature() / 36; ?>">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:<?php echo $machine[0]->getTemperature() / 36 * 100, '%'; ?>">
                             溫度
                         </div>
                     </div>
                     <div class="progress">
-                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:<?php echo $machine[0]->getUV() / 11; ?>">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:<?php echo $machine[0]->getUV() / 11 * 100, '%'; ?>">
                             紫外線
                         </div>
                     </div>
