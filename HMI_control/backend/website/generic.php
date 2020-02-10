@@ -45,6 +45,7 @@ class BundleData
     {
         $lines = 5;
         $tail = tailCustom("Data/history", $lines, true);
+        echo $tail;
         $tailCSV = str_getcsv($tail);
         echo $tailCSV;
         for ($j = $lines; $j != 0; $j--) {
