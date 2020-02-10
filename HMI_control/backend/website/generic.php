@@ -44,7 +44,7 @@ class BundleData
     function __construct($i)
     {
         $lines = 5;
-        $tail = tailCustom("Data/history", $lines,);
+        $tail = tailCustom("Data/history", $lines, true);
         $tailCSV = str_getcsv($tail);
         for ($j = $lines; $j != 0; $j--) {
             if ($tailCSV[$j][1] == $i) {
