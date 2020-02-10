@@ -55,8 +55,11 @@ class BundleData
             echo '<br>';
         }*/
         for ($j = $lines; $j != 0; $j--) {
-            if ($tailCSV[$j][1] == $i) {
-                echo $tailCSV[$j][1];
+
+            foreach($tailCSV[$j] as $k)
+                echo $k, ' ';
+            echo '<br>';
+            /*if ($tailCSV[$j][1] == $i) {
                 $this->temperature = $tailCSV[$j][2];
                 $this->hermidity = $tailCSV[$j][3];
                 $this->uvIndex = $tailCSV[$j][4];
