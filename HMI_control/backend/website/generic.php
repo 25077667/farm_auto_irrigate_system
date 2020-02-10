@@ -44,7 +44,7 @@ class BundleData
     function __construct($i)
     {
         $lines = 5;
-        $tail = explode(" ", tailCustom("Data/history", $lines, true));
+        $tail = explode("\n", tailCustom("Data/history", $lines, true));
         //echo $tail, '<br>', gettype($tail);
         foreach($tail as $j)
             echo $j;
@@ -64,7 +64,7 @@ class BundleData
 $machine = array();
 for ($i = 0; $i < 3; $i++) {
     $newMachine = new BundleData($i);
-    $machine . array_push($newMachine);
+    $machine.array_push($newMachine);
 }
 
 ?>
