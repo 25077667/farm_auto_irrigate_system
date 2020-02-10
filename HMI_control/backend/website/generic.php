@@ -47,9 +47,13 @@ class BundleData
         $tail = explode("\n", tailCustom("Data/history", $lines, true));
         //echo $tail, '<br>', gettype($tail);
         $tailCSV = array();
-        foreach($tail as $j)
+        foreach ($tail as $j)
             array_push($tailCSV, str_getcsv($j));
-        echo $tailCSV, ' ', gettype($tailCSV);
+        foreach ($tailCSV as $j) {
+            foreach ($j as $k)
+                echo $j, ' ';
+            echo '<br>';
+        }
         for ($j = $lines; $j != 0; $j--) {
             if ($tailCSV[$j][1] == $i) {
                 $this->temperature = $tailCSV[$j][2];
@@ -64,7 +68,7 @@ class BundleData
 $machine = array();
 for ($i = 0; $i < 3; $i++) {
     $newMachine = new BundleData($i);
-    array_push($machine,$newMachine);
+    array_push($machine, $newMachine);
 }
 
 ?>
