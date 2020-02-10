@@ -47,7 +47,7 @@ class BundleData
         $tail = explode("\n", tailCustom("Data/history", $lines, true));
         //echo $tail, '<br>', gettype($tail);
         foreach($tail as $j)
-            echo $j;
+            echo $j, '<br>';
         $tailCSV = str_getcsv($tail);
         //echo $tailCSV, ' ', gettype($tailCSV);
         for ($j = $lines; $j != 0; $j--) {
