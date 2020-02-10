@@ -99,7 +99,7 @@ void setup() {
 
 void loop() {
   show_info();
-  int current_hour = Clock.getHour(h12, PM);
+int current_hour = Clock.getHour(h12, PM);
 
   if (current_hour == morning || current_hour == night)
     water();
