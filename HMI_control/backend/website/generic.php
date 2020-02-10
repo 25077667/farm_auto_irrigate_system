@@ -55,13 +55,13 @@ class BundleData
             foreach ($j as $k) {
                 if ($counter == 1 && $k == $i)
                     $doAssign = true;
-                $counter++;
                 if ($doAssign && $counter == 2)
                     $this->temperature = $k;
                 if ($doAssign && $counter == 3)
                     $this->hermidity = $k;
                 if ($doAssign && $counter == 4)
                     $this->uvIndex = $k;
+                $counter++;
             }
 
             // Why here can't work?
