@@ -45,9 +45,9 @@ class BundleData
     {
         $lines = 5;
         $tail = tailCustom("Data/history", $lines, true);
-        echo $tail, '<br>';
+        echo $tail, '<br>', gettype($tail);
         $tailCSV = str_getcsv($tail);
-        echo $tailCSV;
+        echo $tailCSV, ' ', gettype($tailCSV);
         for ($j = $lines; $j != 0; $j--) {
             if ($tailCSV[$j][1] == $i) {
                 $this->temperature = $tailCSV[$j][2];
