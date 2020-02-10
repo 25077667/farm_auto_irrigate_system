@@ -49,14 +49,14 @@ class BundleData
         foreach ($tail as $j)
             array_push($tailCSV, str_getcsv($j));
 
-        for ($j = $lines; $j != 0; $j--) {
+        foreach ($tailCSV as $j) {
             $counter = 0;
             $doAssign = false;
-            foreach ($tailCSV[$j] as $k) {
+            foreach ($j as $k) {
                 if ($counter == 1 && $k == $i)
                     $doAssign = true;
                 $counter++;
-                if($doAssign && $counter == 2)
+                if ($doAssign && $counter == 2)
                     $this->temperature = $k;
                 if ($doAssign && $counter == 3)
                     $this->hermidity = $k;
