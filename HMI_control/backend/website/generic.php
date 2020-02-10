@@ -44,7 +44,7 @@ class BundleData
     function __construct($i)
     {
         $lines = 5;
-        $tail = tailCustom("Data/history", $lines, true);
+        $tail = explode(" ", tailCustom("Data/history", $lines, true));
         echo $tail, '<br>', gettype($tail);
         $tailCSV = str_getcsv($tail);
         echo $tailCSV, ' ', gettype($tailCSV);
