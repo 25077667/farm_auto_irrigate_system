@@ -13,7 +13,7 @@
 .pigHouse,
 .sugarCane,
 .backyard {
-    width: 32%;
+    /*width: 32%;*/
     display: inline-block;
 }
 
