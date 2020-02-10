@@ -51,7 +51,7 @@ class BundleData
             array_push($tailCSV, str_getcsv($j));
         foreach ($tailCSV as $j) {
             foreach ($j as $k)
-                echo $j, ' ';
+                echo $k, ' ';
             echo '<br>';
         }
         for ($j = $lines; $j != 0; $j--) {
