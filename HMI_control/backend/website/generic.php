@@ -46,9 +46,9 @@ class BundleData
         $lines = 5;
         $tail = explode("\n", tailCustom("Data/history", $lines, true));
         //echo $tail, '<br>', gettype($tail);
+        $tailCSV = array();
         foreach($tail as $j)
-            echo $j, '<br>';
-        $tailCSV = str_getcsv($tail);
+            array_push($tailCSV, str_getcsv($j));
         //echo $tailCSV, ' ', gettype($tailCSV);
         for ($j = $lines; $j != 0; $j--) {
             if ($tailCSV[$j][1] == $i) {
@@ -64,7 +64,7 @@ class BundleData
 $machine = array();
 for ($i = 0; $i < 3; $i++) {
     $newMachine = new BundleData($i);
-    $machine.array_push($newMachine);
+    array_push($machine,$newMachine);
 }
 
 ?>
