@@ -12,8 +12,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript>
-		<link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+        <link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
+
+<?php
+require("tailFileSample.php");
+class BundleData
+{
+    public $machineID;
+    public $temperature;
+    public $hermidity;
+    public $uvIndex;
+
+    function getID()
+    {
+        return $this->machineID;
+    }
+    function getTemperature()
+    {
+        return $this->temperature;
+    }
+    function getHermidity()
+    {
+        return $this->hermidity;
+    }
+    function getUV()
+    {
+        return $this->uvIndex;
+    }
+
+    function __construct($i)
+    {
+        $lines = 5;
+        $tail = tailCustom("Data/history", $lines,);
+        $tailCSV = str_getcsv($tail);
+        for ($j = $lines; $j != 0; $j--) {
+            if ($tailCSV[$j][1] == $i) {
+                $this->temperature = $tailCSV[$j][2];
+                $this->hermidity = $tailCSV[$j][3];
+                $this->uvIndex = $tailCSV[$j][4];
+                break;
+            }
+        }
+    }
+}
+
+$machine = array();
+for ($i = 0; $i < 3; $i++) {
+    $newMachine = new BundleData($i);
+    $machine . array_push($newMachine);
+}
+
+?>
 
 <body class="is-preload">
     <!-- Wrapper -->
@@ -61,24 +111,25 @@
                     <!--https://www.w3schools.com/howto/howto_js_rangeslider.asp
 					https://blog.csdn.net/u013347241/article/details/51560290
 				-->
-                    <h2 style="text-align: center;">豬寮</h2>
+                    <h2 style="text-align: center;">機器 0 </h2>
                     <div class="progress">
-                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:<?php echo $machine[0]->getHermidity(), '%'; ?>">
                             濕度
                         </div>
                     </div>
                     <div class="progress">
-                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:<?php echo $machine[0]->getTemperature() / 36, '%'; ?>">
                             溫度
                         </div>
                     </div>
                     <div class="progress">
-                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:50%">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="99" style="width:<?php echo $machine[0]->getUV() / 11, '%'; ?>">
                             紫外線
                         </div>
                     </div>
 
                 </div>
+                <!--
                 <div class='sugarCane'>
                     <h2 style="text-align: center;">甘蔗</h2>
                     <div class="progress">
@@ -115,7 +166,8 @@
                         </div>
                     </div>
                 </div>
-                <div id="time"> </div>
+                -->
+                <?php echo '<div id="time">', date('d-m-Y h:i:s'), '</div>'; ?>
                 <br>
                 <button onclick='javascript:history.go(-1)'>回上頁</button>
             </div>

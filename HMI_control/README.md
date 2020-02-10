@@ -10,3 +10,8 @@ on the other hand, i want to make my parents can use this HMI to grasp all the e
 |temperature(C)|Humidity(%)|UV index|raspi Height(cm)|isAutoNet|
 |-|-|-|-|-|-|
 |25|50.0|6|100|1|
+
+## Data/history.csv
+|Time stamp(sec)|machine ID[0-9]|temperature(C)|Humidity(%)|UV index|
+|-|-|-|-|-|
+|1581358631|0|27|70.0|5|
