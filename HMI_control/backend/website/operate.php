@@ -108,7 +108,7 @@ function writeGoal($_value, $index)
                         自動蓋網
                         <label class="switch">
                             <br>
-                            <input type="checkbox" value=<?php echo $goals[4] == 1; ?> name="pigNet">
+                            <input type="checkbox" <?php if ($goals[4] == 1) echo 'checked="checked"'; ?> name="pigNet" value=0>
                             <?php writeGoal($_POST["pigNet"], 4); ?>
                             <span class="sliderNet round"></span>
                         </label> 手動蓋網
