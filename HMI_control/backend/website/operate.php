@@ -36,8 +36,10 @@ function writeGoal($_value, $index)
         $goals[$index] = $_value;
 
         if ($index == 4 && isset($_POST["pigNet"])) {
-            $goals[4] = !($goals[4] == 1);
-            echo $goals[4];
+            if($_POST["pigNet"] == 1)
+                $goals[4] = 1;
+            else
+                $goals[4] = 0;
         }
 
         if (($handle1 = fopen("Data/goal.csv", "w+")) !== FALSE) {
@@ -108,7 +110,7 @@ function writeGoal($_value, $index)
                         自動蓋網
                         <label class="switch">
                             <br>
-                            <input type="checkbox" <?php if ($goals[4] == 1) echo 'checked="checked"'; ?> name="pigNet" value=1>
+                            <input type="checkbox" <?php if ($goals[4] == 1) echo 'checked="checked"'; ?> name="pigNet" value=<?php echo $goals[4]; ?>>
                             <?php writeGoal($_POST["pigNet"], 4); ?>
                             <span class="sliderNet round"></span>
                         </label> 手動蓋網
