@@ -96,15 +96,15 @@ function writeGoal($_value, $index)
 
                         <h2 style="text-align: center;">機器 0</h2>
                         <p>空氣溫度設定 </p>
-                        <input type="range" min="20" max="36" value="<?php echo $goals[0]; ?>" class="slider" name="pigAirWet" onchange="<?php writeGoal($_POST["pigAirWet"], 0); ?>">
-
+                        <input type="range" min="20" max="36" value=<?php echo $goals[0]; ?> class="slider" name="pigAirWet">
+                        <?php writeGoal($_POST["pigAirWet"], 0); ?>
                         <p>土壤濕度設定</p>
-                        <input type=" range" min="1" max="100" value="<?php echo $goals[1]; ?>" class="slider" name="pigMudWet">
+                        <input type="range" min="1" max="100" value=<?php echo $goals[1]; ?> class="slider" name="pigMudWet">
                         <?php writeGoal($_POST["pigMudWet"] * 1.0, 1); ?>
                         自動蓋網
                         <label class="switch">
                             <br>
-                            <input type="checkbox" value="<?php echo $goals[4] == 1; ?>" name="pigNet">
+                            <input type="checkbox" value=<?php echo $goals[4] == 1; ?> name="pigNet">
                             <?php writeGoal($_POST["pigNet"], 4); ?>
                             <span class="sliderNet round"></span>
                         </label> 手動蓋網
