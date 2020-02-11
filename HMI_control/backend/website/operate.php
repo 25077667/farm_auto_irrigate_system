@@ -34,15 +34,15 @@ function writeGoal($_value, $index)
     $goals = readGoals();
     $goals[$index] = $_value;
 
-    foreach ($goals as $i)
-        echo $i, " ";
+    //foreach ($goals as $i)
+        echo $goals[0], " ";
 
     if (($handle1 = fopen("Data/goal.csv", "w+")) !== FALSE) {
         fputcsv($handle1, $goals);
     } else
         echo "write goal error";
     fclose($handle1);
-    //header("Refresh:0");    //refresh page
+    header("Refresh:0");    //refresh page
 }
 // Be careful https://2www.w3school.com.cn/php/func_filesystem_fgetcsv.asp
 ?>
@@ -97,15 +97,15 @@ function writeGoal($_value, $index)
                         <h2 style="text-align: center;">機器 0</h2>
                         <p>空氣溫度設定 </p>
                         <input type="range" min="20" max="36" value="<?php echo $goals[0]; ?>" class="slider" name="pigAirWet">
-                        <?php writeGoal($_POST["pigAirWet"], 0);                        ?>
+                        <?php writeGoal($_POST["pigAirWet"], 0); ?>
                         <p>土壤濕度設定</p>
                         <input type="range" min="1" max="100" value="<?php echo $goals[1]; ?>" class="slider" name="pigMudWet">
-                        <?php writeGoal($_POST["pigMudWet"] * 1.0, 1);                        ?>
+                        <?php writeGoal($_POST["pigMudWet"] * 1.0, 1); ?>
                         自動蓋網
                         <label class="switch">
                             <br>
-                            <input type="checkbox" value="<?php echo $goals[4]; ?>" name="pigNet">
-                            <?php writeGoal($_POST["pigNet"], 4);                            ?>
+                            <input type="checkbox" value="<?php echo $goals[4] == 1; ?>" name="pigNet">
+                            <?php writeGoal($_POST["pigNet"], 4); ?>
                             <span class="sliderNet round"></span>
                         </label> 手動蓋網
                     </div>
