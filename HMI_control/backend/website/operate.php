@@ -32,11 +32,11 @@ function writeGaol($_value, $index)
     if ($_value == NULL || $index == NULL)
         return;
     $goals = readGoals();
-
-    foreach($goals as $i)
-        echo $i, " ";
-
     $goals[$index] = $_value;
+
+    foreach ($goals as $i)
+        echo $i, " ";
+        
     if (($handle1 = fopen("Data/goal.csv", "w+")) !== FALSE) {
         fputcsv($handle1, $goals);
     } else
