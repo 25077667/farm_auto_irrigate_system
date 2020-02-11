@@ -29,20 +29,22 @@ function readGoals()
 
 function writeGoal($_value, $index)
 {
-    if ($_value == NULL || $index == NULL)
-        return;
-    $goals = readGoals();
-    $goals[$index] = $_value;
+    if (isset($_POST["submitBtn"])) {
+        if ($_value == NULL || $index === NULL)
+            return;
+        $goals = readGoals();
+        $goals[$index] = $_value;
 
-    //foreach ($goals as $i)
-    echo $goals[0], " ";
+        //foreach ($goals as $i)
+        echo $goals[0], " ";
 
-    if (($handle1 = fopen("Data/goal.csv", "w+")) !== FALSE) {
-        fputcsv($handle1, $goals);
-    } else
-        echo "write goal error";
-    fclose($handle1);
-    header("Refresh:0");    //refresh page
+        if (($handle1 = fopen("Data/goal.csv", "w+")) !== FALSE) {
+            fputcsv($handle1, $goals);
+        } else
+            echo "write goal error";
+        fclose($handle1);
+        header("Refresh:0");    //refresh page
+    }
 }
 // Be careful https://2www.w3school.com.cn/php/func_filesystem_fgetcsv.asp
 ?>
@@ -133,7 +135,7 @@ function writeGoal($_value, $index)
                             <span class="sliderNet round"></span>
                         </label> 手動蓋網
                     </div>-->
-                    <input type=submit value="送出">
+                    <input type=submit value="送出" name="submitBtn">
                 </form>>
                 <div id="time"> </div>
                 <br>
