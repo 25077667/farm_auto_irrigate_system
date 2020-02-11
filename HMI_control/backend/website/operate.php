@@ -35,15 +35,17 @@ function writeGoal($_value, $index)
         $goals = readGoals();
         $goals[$index] = $_value;
 
-        if($index == 4 && isset($_POST["pigNet"]))
+        if ($index == 4 && isset($_POST["pigNet"])) {
             $goals[4] = !$goals[4];
+            echo $goals[4];
+        }
 
         if (($handle1 = fopen("Data/goal.csv", "w+")) !== FALSE) {
             fputcsv($handle1, $goals);
         } else
             echo "write goal error";
         fclose($handle1);
-        header("Refresh:0");    //refresh page
+        //header("Refresh:0");    //refresh page
     }
 }
 // Be careful https://2www.w3school.com.cn/php/func_filesystem_fgetcsv.asp
