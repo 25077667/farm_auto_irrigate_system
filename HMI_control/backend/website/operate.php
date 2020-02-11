@@ -35,13 +35,7 @@ function writeGoal($_value, $index)
         $goals = readGoals();
         $goals[$index] = $_value;
 
-
-        $goals[4] = isset($_POST["pigNet"]) xor $goals[4];
-        /*if ($_POST["pigNet"] == 1)
-                $goals[4] = 0;
-            else
-                $goals[4] = 1;*/
-
+        $goals[4] = isset($_POST["pigNet"]) xor $goals[4];  // You can see research/DSC_0526.JPG for this result
 
         if (($handle1 = fopen("Data/goal.csv", "w+")) !== FALSE) {
             fputcsv($handle1, $goals);
