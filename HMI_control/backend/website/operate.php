@@ -36,7 +36,7 @@ function writeGoal($_value, $index)
         $goals[$index] = $_value;
 
         if ($index == 4 && isset($_POST["pigNet"])) {
-            $goals[4] = !$goals[4];
+            $goals[4] = !($goals[4] == 1);
             echo $goals[4];
         }
 
