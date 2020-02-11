@@ -8,7 +8,7 @@ on the other hand, i want to make my parents can use this HMI to grasp all the e
 
 ## Data/goal.csv format
 |temperature(C)|Humidity(%)|UV index|raspi Height(cm)|isAutoNet|
-|-|-|-|-|-|-|
+|-|-|-|-|-|
 |25|50.0|6|100|1|
 
 ## Data/history.csv

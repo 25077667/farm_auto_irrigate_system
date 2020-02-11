@@ -35,8 +35,8 @@ function writeGoal($_value, $index)
         $goals = readGoals();
         $goals[$index] = $_value;
 
-        //foreach ($goals as $i)
-        echo $goals[0], " ";
+        if($index == 4 && isset($_POST["pigNet"]))
+            $goals[4] = !$goals[4];
 
         if (($handle1 = fopen("Data/goal.csv", "w+")) !== FALSE) {
             fputcsv($handle1, $goals);
