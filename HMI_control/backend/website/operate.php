@@ -37,9 +37,9 @@ function writeGoal($_value, $index)
 
         if ($index == 4 && isset($_POST["pigNet"])) {
             if($_POST["pigNet"] == 1)
-                $goals[4] = 1;
-            else
                 $goals[4] = 0;
+            else
+                $goals[4] = 1;
         }
 
         if (($handle1 = fopen("Data/goal.csv", "w+")) !== FALSE) {
