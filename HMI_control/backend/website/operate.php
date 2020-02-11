@@ -32,6 +32,10 @@ function writeGaol($_value, $index)
     if ($_value == NULL || $index == NULL)
         return;
     $goals = readGoals();
+
+    foreach($goals as $i)
+        echo $i, " ";
+
     $goals[$index] = $_value;
     if (($handle1 = fopen("Data/goal.csv", "w+")) !== FALSE) {
         fputcsv($handle1, $goals);
@@ -90,7 +94,7 @@ function writeGaol($_value, $index)
                         <!--https://www.w3schools.com/howto/howto_js_rangeslider.asp
 					    https://blog.csdn.net/u013347241/article/details/51560290-->
 
-                        <h2 style="text-align: center;">豬寮</h2>
+                        <h2 style="text-align: center;">機器 0</h2>
                         <p>土壤濕度設定</p>
                         <?php
                         echo '<input type="range" min="1" max="100" value="', $goals[1], '" class="slider" name="pigMudWet">';
