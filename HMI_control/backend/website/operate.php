@@ -24,6 +24,8 @@ function readGoals()
     } else
         echo "read goal error";
     fclose($handle);
+    $goals[2] = strval($goals[2]);
+    $goals[3] = strval($goals[3]);
     return $goals;
 }
 
@@ -36,7 +38,7 @@ function writeGaol($_value, $index)
 
     foreach ($goals as $i)
         echo $i, " ";
-        
+
     if (($handle1 = fopen("Data/goal.csv", "w+")) !== FALSE) {
         fputcsv($handle1, $goals);
     } else
