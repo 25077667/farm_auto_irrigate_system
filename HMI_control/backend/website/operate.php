@@ -24,12 +24,10 @@ function readGoals()
     } else
         echo "read goal error";
     fclose($handle);
-    $goals[2] = strval($goals[2]);
-    $goals[3] = strval($goals[3]);
     return $goals;
 }
 
-function writeGaol($_value, $index)
+function writeGoal($_value, $index)
 {
     if ($_value == NULL || $index == NULL)
         return;
@@ -97,21 +95,17 @@ function writeGaol($_value, $index)
 					    https://blog.csdn.net/u013347241/article/details/51560290-->
 
                         <h2 style="text-align: center;">機器 0</h2>
+                        <p>空氣溫度設定 </p>
+                        <input type="range" min="20" max="36" value="<?php echo $goals[0]; ?>" class="slider" name="pigAirWet">
+                        <?php writeGoal($_POST["pigAirWet"], 0);                        ?>
                         <p>土壤濕度設定</p>
-                        <?php
-                        echo '<input type="range" min="1" max="100" value="', $goals[1], '" class="slider" name="pigMudWet">';
-                        writeGaol($_POST["pigMudWet"], 1);
-                        echo '<p>空氣溫度設定 </p>';
-                        echo '<input type="range" min="20" max="36" value="', $goals[0], '" class="slider" name="pigAirWet">';
-                        writeGaol($_POST["pigAirWet"], 0);
-                        ?>
+                        <input type="range" min="1" max="100" value="<?php echo $goals[1]; ?>" class="slider" name="pigMudWet">
+                        <?php writeGoal($_POST["pigMudWet"] * 1.0, 1);                        ?>
                         自動蓋網
                         <label class="switch">
                             <br>
-                            <?php
-                            echo '<input type="checkbox" value="', $goals[4], '" name="pigNet">';
-                            writeGaol($_POST["pigNet"], 4);
-                            ?>
+                            <input type="checkbox" value="<?php echo $goals[4]; ?>" name="pigNet">
+                            <?php writeGoal($_POST["pigNet"], 4);                            ?>
                             <span class="sliderNet round"></span>
                         </label> 手動蓋網
                     </div>
