@@ -50,22 +50,8 @@ class BundleData
             array_push($tailCSV, str_getcsv($j));
 
         foreach ($tailCSV as $j) {
-            /*$counter = 0;
-            $doAssign = false;
-            foreach ($j as $k) {
-                if ($counter == 1 && $k == $i)
-                    $doAssign = true;
-                else if ($doAssign && $counter == 2)
-                    $this->temperature = $k;
-                else if ($doAssign && $counter == 3)
-                    $this->hermidity = $k;
-                else if ($doAssign && $counter == 4)
-                    $this->uvIndex = $k;
-                $counter++;
-            }*/
-
-            // Why here can't work?
             if ($j[1] == $i) {
+                $this->ID = $j[1];
                 $this->temperature = $j[2];
                 $this->hermidity = $j[3];
                 $this->uvIndex = $j[4];
