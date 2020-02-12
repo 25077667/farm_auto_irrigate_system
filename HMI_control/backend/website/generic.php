@@ -74,7 +74,7 @@ class BundleData
     }
 }
 
-$machine = array();
+$machine = new array();
 for ($i = 0; $i < 3; $i++) {
     $newMachine = new BundleData($i);
     array_push($machine, $newMachine);
