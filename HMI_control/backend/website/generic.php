@@ -65,12 +65,10 @@ class BundleData
             }*/
 
             // Why here can't work?
-            if ($tailCSV[$j][1] == $i) {
-                var_dump($tailCSV[$j]);
-                var_dump($tailCSV);
-                $this->temperature = $tailCSV[$j][2];
-                $this->hermidity = $tailCSV[$j][3];
-                $this->uvIndex = $tailCSV[$j][4];
+            if ($j[1] == $i) {
+                $this->temperature = $j[2];
+                $this->hermidity = $j[3];
+                $this->uvIndex = $j[4];
                 break;
             }
         }
