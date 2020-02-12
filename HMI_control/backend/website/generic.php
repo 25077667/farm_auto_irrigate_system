@@ -70,11 +70,12 @@ class BundleData
                 $this->hermidity = $tailCSV[$j][3];
                 $this->uvIndex = $tailCSV[$j][4];
                 break;
+            }
         }
     }
 }
 
-$machine = [];
+$machine = array();
 for ($i = 0; $i < 3; $i++) {
     $newMachine = new BundleData($i);
     array_push($machine, $newMachine);
