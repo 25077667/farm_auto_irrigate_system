@@ -19,14 +19,14 @@
 require("tailFileSample.php");
 class BundleData
 {
-    public $machineID;
+    public $ID;
     public $temperature;
     public $hermidity;
     public $uvIndex;
 
     function getID()
     {
-        return $this->machineID;
+        return $this->ID;
     }
     function getTemperature()
     {
@@ -74,7 +74,7 @@ class BundleData
     }
 }
 
-$machine = new array();
+$machine = [];
 for ($i = 0; $i < 3; $i++) {
     $newMachine = new BundleData($i);
     array_push($machine, $newMachine);
