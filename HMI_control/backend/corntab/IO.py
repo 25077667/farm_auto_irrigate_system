@@ -19,10 +19,16 @@ def sendGoal(msg):
     sleep(0.1)
     print("Sent!")
 
+def cleanCSV(line):
+    newLine = ""
+    for i in line:
+        if i == ',' or i == '.' or i.isdigit():
+            newLine += i
+    return newLine
 
 def readGoal():
     """
-    Read raw file and send to Arduino 
+    Read raw file and send to Arduino
     last number is check sum(hash).
     """
     goalPath = '/var/www/html/Data/goal.csv'
@@ -31,6 +37,7 @@ def readGoal():
     try:
         flock(f, LOCK_EX | LOCK_NB)
         newGoal = f.readline()
+        newGoal = cleanCSV(newGoal)
         if not prevGoal:
             prevGoal = newGoal
         elif prevGoal != newGoal:
@@ -70,8 +77,7 @@ def readSerial():
 
 
 if __name__ == "__main__":
-    while True:
-        sleep(0.3)
-        readGoal()
-        sleep(0.2)
-        readSerial()
+    sleep(0.3)
+    readGoal()
+    sleep(0.2)
+    readSerial()
