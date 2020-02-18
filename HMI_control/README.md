@@ -14,6 +14,6 @@ check = (((temperature%127 + int(Humidity)%127)%127 + (UV index)%127)%127 + (ras
 For any two numbers got mod by 127, form left to right.
 
 ## Data/history.csv
-|Time stamp(sec)|machine ID[0-9]|temperature(C)|Humidity(%)|UV index|
-|-|-|-|-|-|
-|1581358631|0|27|70.0|5|
+|Time stamp(sec)|machine ID[0-9]|temperature(C)|Humidity(%)|UV index|check|
+|-|-|-|-|-|-|
+|1581358631|0|27|70.0|5|102|
