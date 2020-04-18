@@ -1,6 +1,5 @@
-#include <DHT.h> //depend on Adafruit_Sensor, didn't install yet
+#include <DHT.h>
 #include <DS3231.h>
-//#include <DallasTemperature.h>
 #include <GUVA_S12SD.h>
 #include <OneWire.h>
 #include <SoftwareSerial.h>
@@ -20,11 +19,18 @@ int night;
 unsigned long irrigateDuration;
 unsigned long actPeriod;
 unsigned long prevCheckTime;
-GUVA_S12SD uvSensor;                    // UVs
-//OneWire oneWire(ONE_WIRE_PIN);          // wire of temp
-//DallasTemperature tempSensor(&oneWire); // temperature
+GUVA_S12SD uvSensor; // UVs
+// OneWire oneWire(ONE_WIRE_PIN);          // wire of temp
+// DallasTemperature tempSensor(&oneWire); // temperature
 DHT dhtSensor(DHT_PIN, DHTTYPE);
 
+/**
+ * Because Arduino is based on C++, hence here has constructors
+ * This goal is the user sets to the "goal", for some:
+ * humidity called "wet"
+ * temperature called temperature
+ * the index of Ultraviolet(UV) called unIndex
+ */
 struct Goal {
   float wet, temperature;
   int uvIndex;
@@ -36,9 +42,13 @@ struct Goal {
   }
 } goal;
 
+/**
+ * Convert a string to int
+ * If it is not a integer of string, the return value is undefined
+ */
 int stringToInt(String _str) {
-  // with q be the end of string
-  // i'm not sure it exist '\0' in the end of string
+  // With q be the end of string
+  // Because I'm not sure it exist '\0' in the end of string
   int index = 0;
   int tmp = 0;
   while (_str[index] != 'q') {
@@ -48,36 +58,61 @@ int stringToInt(String _str) {
   return tmp;
 }
 
+/**
+ * Calculate the check sum.
+ */
 unsigned int cal_checksum(unsigned int _temp, unsigned int _humi,
                           unsigned int _uv, unsigned int _piHerght,
                           bool _isAuto) {
+  /**
+   * Why is the 127?
+   * Becuase the 127 is the biggest prime number in [0, 128]
+   * NOTES: In some arduino an "int" is only 8 bits. Hence I use [0, 128]
+   * By Fermat's little theorem, the probability of collision goes to minimal.
+   */
 
   return ((((_temp % 127 + _humi % 127) % 127 + _uv % 127) % 127 +
-           _piHerght % 127) % 127 + (int)_isAuto) % 127;
+           _piHerght % 127) %
+              127 +
+          (int)_isAuto) %
+         127;
 }
 
+/**
+ * To check the message form Master(Raspberry pi) message is correct.
+ * Well, you can use non-check value to do action, but not granted the value is
+ * correct.
+ */
 bool checkSum(unsigned int _temp, unsigned int _humi, unsigned int _uv,
               unsigned int _piHerght, bool _isAuto, unsigned int _check) {
   unsigned int check_res = cal_checksum(_temp, _humi, _uv, _piHerght, _isAuto);
   return check_res == _check;
 }
 
+/**
+ * Get current time by seconds
+ * Well, this function is not good enough,
+ * To make sure the current time, we need to compare "years, month, date,
+ * hour..." respectively
+ */
 unsigned long currentTimeBySecond() {
-  unsigned long days =
-      (long)Clock.getYear() * 365 + (long)Clock.getMonth(Century) * 30 + (long)Clock.getDate();
+  unsigned long days = (long)Clock.getYear() * 365 +
+                       (long)Clock.getMonth(Century) * 30 +
+                       (long)Clock.getDate();
   unsigned long seconds = ((long)Clock.getHour(h12, setPM)) * 3600 +
-                          (long)Clock.getMinute() * 60 + (long)Clock.getSecond();
+                          (long)Clock.getMinute() * 60 +
+                          (long)Clock.getSecond();
   return days * 86400 + seconds;
 }
 
 /**
-  * DS3231 to arduino
-  * VCC to 5V
-  * GND to GND
-  * D   to SDA
-  * C   to SCL
-  * otherwise not work!
-  */
+ * DS3231 to arduino
+ * VCC to 5V
+ * GND to GND
+ * D   to SDA
+ * C   to SCL
+ * otherwise not work!
+ */
 void setTime() {
   Clock.setYear(20);
   Clock.setMonth(2);
@@ -99,9 +134,7 @@ int getUV() { return (int)uvSensor.UVIndex() + 1; }
 
 float getDegreeOfWet() { return dhtSensor.readHumidity(); }
 
-float getTemperature() {
-  return dhtSensor.readTemperature();
-}
+float getTemperature() { return dhtSensor.readTemperature(); }
 
 String getAllInfo() {
   /*
@@ -110,7 +143,7 @@ String getAllInfo() {
   unsigned int _temp_i = int(getTemperature());
   unsigned int _humi_i = int(getDegreeOfWet());
   unsigned int _uv_i = int(getUV());
-  
+
   String _time = getCurrentTime();
   String temp = String(_temp_i);
   String wet = String(_humi_i);
@@ -124,7 +157,7 @@ String getAllInfo() {
    * this machine ID = 0
    * isAutoNet set const 0, because this parameter it not works here
    */
-  String check = String(cal_checksum(_temp_i, _humi_i, _uv_i, 0, 0));   
+  String check = String(cal_checksum(_temp_i, _humi_i, _uv_i, 0, 0));
   return _time + ",0," + temp + "," + wet + "," + UVs + "," + check;
 }
 
@@ -142,10 +175,15 @@ void printCurrentTime() {
 
 void doIrrigate() {
   digitalWrite(RELAY_PIN, true);
-  delay(irrigateDuration);
+  unsigned long start = currentTimeBySecond();
+  while (currentTimeBySecond() - start < irrigateDuration)
+    ;
   digitalWrite(RELAY_PIN, false);
 }
 
+/**
+* Please help me to compelete the function action
+*/
 void doNet(bool openNet) {
   if (openNet)
     // relay net on
@@ -174,8 +212,6 @@ void action() {
   }
 }
 
-
-
 void serialInput() {
   if (Serial.available()) {
     String _temp = Serial.readStringUntil(',');
@@ -195,8 +231,9 @@ void serialInput() {
     unsigned int _piHeight_i = _piHeight.toInt();
     bool _isAutoNet_i = _isAutoNet.toInt();
     unsigned int _check_i = _check.toInt();
-    
-    if (checkSum(_temp_i, _humi_i, _uv_i, _piHeight_i, _isAutoNet_i, _check_i) == false)
+
+    if (checkSum(_temp_i, _humi_i, _uv_i, _piHeight_i, _isAutoNet_i,
+                 _check_i) == false)
       return; // worng checkSum
 
     goal.temperature = _temp_i;
@@ -220,7 +257,7 @@ void setup() {
   dhtSensor.begin();
   pinMode(RELAY_PIN, OUTPUT);
 
-  //setTime();  //just upload it in the first time
+  // setTime();  //just upload it in the first time
   irrigateDuration = 370370; // ms
   morning = 6;
   night = 16;
@@ -231,15 +268,15 @@ void setup() {
 }
 
 void loop() {
-  //printCurrentTime();
-  //Serial.println(getAllInfo());
-  //Serial.println(getDegreeOfWet()); //get nan
-  //Serial.println(getTemperature());
-  //Serial.println(getCurrentTime());
-  //delay(1000);
-  
+  // printCurrentTime();
+  // Serial.println(getAllInfo());
+  // Serial.println(getDegreeOfWet()); //get nan
+  // Serial.println(getTemperature());
+  // Serial.println(getCurrentTime());
+  // delay(1000);
+
   serialInput();
   action();
-  //delay(1000);
+  // delay(1000);
   serialOutput();
 }
