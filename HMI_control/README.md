@@ -7,10 +7,10 @@ And make it smarter, more usefull...
 On the other hand, i want to make my parents can use this HMI to grasp all the environment argument, and give it human decision.
 
 ## Data/goal.csv format
-|temperature(C)|Humidity(%)|UV index|raspi Height(cm)|isAutoNet|check|
+|temperature(C)|Humidity(%)|UV index|RaspberryPi Height(cm)|isAutoNet|check|
 |-|-|-|-|-|-|
 |25|50.0|6|100|1|55|
-check = (((temperature%127 + int(Humidity)%127)%127 + (UV index)%127)%127 + (raspi Height)%127)%127 + isAutoNet
+check = (((temperature%127 + int(Humidity)%127)%127 + (UV index)%127)%127 + (RaspberryPi Height)%127)%127 + isAutoNet
 For any two numbers got mod by 127, form left to right.
 
 ## Data/history.csv
@@ -26,9 +26,9 @@ For any two numbers got mod by 127, form left to right.
 ### IO
 從這邊資料夾("./")可以看到，Arduino 端，以及後端。
 Arduino 透過 GPIO 跟樹莓派傳輸資料，
-Arduino 的 ".arduino/main_lib/main_lib.ino" 的 `void serialInput()` 接收 Raspi 傳過來的資料。
-Raspi 是透過 "./backend/corntab/IO.py" 跟 Arduino 做溝通。
-（印象中，我是在 Raspi 的 /etc/corntab 寫某一固定週期會去執行這個 IO.py ）
+Arduino 的 ".arduino/main_lib/main_lib.ino" 的 `void serialInput()` 接收 RaspberryPi 傳過來的資料。
+RaspberryPi 是透過 "./backend/corntab/IO.py" 跟 Arduino 做溝通。
+（印象中，我是在 RaspberryPi 的 /etc/corntab 寫某一固定週期會去執行這個 IO.py ）
 
 ### Engine
 Web server engine 是用 `Nginx`，他的 root 目錄好像是在 /var/www/ 底下
@@ -41,18 +41,18 @@ Web server engine 是用 `Nginx`，他的 root 目錄好像是在 /var/www/ 底�
 應該有不少 bug ，不確定，因為沒有測。就只有寫大概（學弟拿走樹莓派，又沒動作，我也只能沒動做r，然後我又很忙zzz）
 
 ### Wi-Fi
-這台 Raspi 還有用 `hostapd`, `dhcpcpd`, `iptable`, `dnsmsq` 來控制 Wi-Fi 子網路的運作。
+這台 RaspberryPi 還有用 `hostapd`, `dhcpcpd`, `iptable`, `dnsmsq` 來控制 Wi-Fi 子網路的運作。
 全部都是 default path, 沒有特別改，所以應該可以 Google 的到放在哪邊。
 **這功能挺重要的**，不可以讓 Wi-Fi 炸掉，因為我這網站阿，就是打算讓手機去控制。
-讓手機連到這台 Raspi 的 Wi-Fi (SSID: farm_ap，如果你沒有看到，就是炸了)，然後 http://192.168.2.1 就可以看到 Web home page("./backend/website/index.php")
-透過這個 "./backend/website/index.php" 來對 Raspi 操作，進而對 Arduino 控制。
-（當然，備援機制就是接螢幕讓 Raspi 瀏覽 localhost）
+讓手機連到這台 RaspberryPi 的 Wi-Fi (SSID: farm_ap，如果你沒有看到，就是炸了)，然後 http://192.168.2.1 就可以看到 Web home page("./backend/website/index.php")
+透過這個 "./backend/website/index.php" 來對 RaspberryPi 操作，進而對 Arduino 控制。
+（當然，備援機制就是接螢幕讓 RaspberryPi 瀏覽 localhost）
 
 ## 待解決問題
 1. 寫個 py 去控制超音波（問學弟（威年他們），他們知道）來控制高度。（這邊整個還沒有寫）
 
-2. Synchronize 當前高度到 "./backend/website/Data/goal.csv" 的 "raspi Height" 欄（檔案格式在上面英文的地方）。
-（印象中，這邊只要把 py 讀 "./backend/website/Data/goal.csv" 的 "raspi Height" 就可以知道前端傳過來的目標高度是多少了）
+2. Synchronize 當前高度到 "./backend/website/Data/goal.csv" 的 "RaspberryPi Height" 欄（檔案格式在上面英文的地方）。
+（印象中，這邊只要把 py 讀 "./backend/website/Data/goal.csv" 的 "RaspberryPi Height" 就可以知道前端傳過來的目標高度是多少了）
 這邊看 "./backend/website/thisHMI.php" 的 `readGoals()` 跟 `writeHeigh($_value)` 就會知道問題了。對，那邊寫法很髒。就很髒。
 
 3. 那個 "./backend/website/history.php" 是吃 "./backend/website/Data/history" 化成圖的，印象中功能好像偶爾會爛掉，就是顯示不出來吧（可能要去 git log 看）。
