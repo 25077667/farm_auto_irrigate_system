@@ -30,8 +30,10 @@ So, $check \le 127, \in \mathabb{N}$
 ## 一些架構說明：
 ### IO
 從這邊資料夾("./")可以看到，Arduino 端，以及後端。
+
 Arduino 透過 GPIO 跟樹莓派傳輸資料，
-Arduino 的 ".arduino/main_lib/main_lib.ino" 的 `void serialInput()` 接收 RaspberryPi 傳過來的資料。
+Arduino 的 "./arduino/main_lib/main_lib.ino" 的 `void serialInput()` 接收 RaspberryPi 傳過來的資料。
+
 RaspberryPi 是透過 "./backend/corntab/IO.py" 跟 Arduino 做溝通。
 （印象中，我是在 RaspberryPi 的 /etc/corntab 寫某一固定週期會去執行這個 IO.py ）
 
@@ -42,13 +44,17 @@ Web server engine 是用 `Nginx`，他的 root 目錄好像是在 /var/www/ 底�
 
 ### Data
 這邊 web 控制沒有弄 `SQL` 因為我不熟，所以一開始用 csv 格式東西硬爆（搭配 PHP 的 fcntl 做 sync.）。
+
 這些檔案在 "./backend/website/Data/*" 有，我好像有寫一個 sh 幫我 pull from GitHub and `cp` to /var/www/ ，那個 `sh` 好像在 /home/pi 底下（或是他的子目錄， `$ find . -name "*.sh"` 一下就會看到）。
+
 應該有不少 bug ，不確定，因為沒有測。就只有寫大概（學弟拿走樹莓派，又沒動作，我也只能沒動做r，然後我又很忙zzz）
 
 ### Wi-Fi
 這台 RaspberryPi 還有用 `hostapd`, `dhcpcpd`, `iptable`, `dnsmsq` 來控制 Wi-Fi 子網路的運作。
 全部都是 default path, 沒有特別改，所以應該可以 Google 的到放在哪邊。
+
 **這功能挺重要的**，不可以讓 Wi-Fi 炸掉，因為我這網站阿，就是打算讓手機去控制。
+
 讓手機連到這台 RaspberryPi 的 Wi-Fi (SSID: farm_ap，如果你沒有看到，就是炸了)，然後 http://192.168.2.1 就可以看到 Web home page("./backend/website/index.php")
 透過這個 "./backend/website/index.php" 來對 RaspberryPi 操作，進而對 Arduino 控制。
 （當然，備援機制就是接螢幕讓 RaspberryPi 瀏覽 localhost）
