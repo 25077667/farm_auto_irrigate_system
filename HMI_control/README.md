@@ -71,4 +71,6 @@ Web server engine 是用 `Nginx`，他的 root 目錄好像是在 /var/www/ 底�
 
 4. 如果時間允許，可以把 "./backend/website/Data/*" 換成 `SQL` 這樣應該會省掉很多麻煩
 
+5. 捲網子的 function 我還沒有寫，因為不知道要捲多少。
+
 大概就這樣
