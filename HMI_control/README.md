@@ -15,6 +15,7 @@ check = (((temperature%127 + int(Humidity)%127)%127 + (UV index)%127)%127 + (Ras
 > For any two numbers got mod by 127, form left to right.
 
 In LaTeX expression: $check = {({T \mod 127} + {Hu \mod 127} + {UV \mod 127} + {Hi \mod 127}) \mod 127} + isAutoNet$
+
 So, $check \le 127, \in \mathabb{N}$
 
 ## Data/history.csv
