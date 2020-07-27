@@ -71,6 +71,8 @@ def readSerial():
     if inWait > 0:
         print("Do receive")
         res = ser.readline()
+	receive_time = str(res[:res.find(',')])
+	#### NOT COMPELETE ABOUT TIME FORMATTING ####
         sleep(0.1)
         print("Write history")
         writeHistory(res)
